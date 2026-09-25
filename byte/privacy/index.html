@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Byte Privacy Policy</title>
+<meta name="description" content="How the Byte app collects, uses, shares and deletes your data." />
+<style>
+  :root {
+    --bg: #f4ecd8; --card: #fbf6ea; --ink: #3a2f1f; --muted: #6f6047;
+    --rule: #d8c9a8; --accent: #4a7a2c;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1b1710; --card: #241f16; --ink: #ece3d1; --muted: #a2937a;
+      --rule: #3d3527; --accent: #8cc063;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1b1710; --card: #241f16; --ink: #ece3d1; --muted: #a2937a;
+    --rule: #3d3527; --accent: #8cc063;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.65 ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif;
+    padding: 32px 16px 64px;
+  }
+  main { max-width: 720px; margin: 0 auto; background: var(--card);
+         border: 1px solid var(--rule); border-radius: 12px; padding: 32px 28px; }
+  h1 { font-size: 1.7rem; margin: 0 0 4px; }
+  h2 { font-size: 1.12rem; margin: 32px 0 8px; padding-top: 16px; border-top: 1px solid var(--rule); }
+  h2:first-of-type { border-top: 0; padding-top: 0; }
+  h3 { font-size: 1rem; margin: 20px 0 6px; }
+  .updated { color: var(--muted); font-size: .9rem; margin: 0 0 8px; }
+  a { color: var(--accent); }
+  ul { padding-left: 20px; }
+  li { margin: 6px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: .94rem; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th { font-weight: 600; }
+  .note { background: color-mix(in srgb, var(--accent) 10%, transparent);
+          border-left: 3px solid var(--accent); padding: 12px 14px; border-radius: 0 6px 6px 0; margin: 16px 0; }
+  footer { max-width: 720px; margin: 20px auto 0; color: var(--muted); font-size: .86rem; text-align: center; }
+  @media (max-width: 520px) { main { padding: 22px 18px; } table { font-size: .88rem; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>Byte Privacy Policy</h1>
+  <p class="updated">Last updated 23 September 2026</p>
+  <p>Byte is a budgeting app made by All Bark (“we”, “us”). It reads your grocery
+  receipts and, if you connect them, your bank transactions, so it can show you
+  where your money goes and what things cost. This page explains exactly what we
+  collect, who else touches it, and how to get rid of it.</p>
+
+  <h2>What we collect</h2>
+  <table>
+    <tr><th>Data</th><th>Why</th></tr>
+    <tr><td>Email address, and a display name if you set one</td><td>To create and sign you into your account.</td></tr>
+    <tr><td>Photos of receipts that you scan or upload</td><td>To read the line items, prices and totals off them.</td></tr>
+    <tr><td>The contents of those receipts — merchant, date, items, prices, totals</td><td>To build your spending history, budgets, shopping lists and price comparisons.</td></tr>
+    <tr><td>Bank and card transactions, balances and account names, if you connect an account</td><td>To show spending you haven’t scanned a receipt for, and to match receipts to card charges.</td></tr>
+    <tr><td>Subscription status and purchase history</td><td>To unlock the app for paying subscribers.</td></tr>
+    <tr><td>Crash reports and performance data</td><td>To find and fix bugs.</td></tr>
+  </table>
+  <p>We do <strong>not</strong> collect your location, contacts, health data or
+  browsing history. We do not show ads, and we do not sell your data or share it
+  with advertisers or data brokers.</p>
+
+  <h2>How receipt scanning works</h2>
+  <p>When you scan a receipt, the image is uploaded to our server and sent to
+  <a href="https://www.anthropic.com/" rel="noopener">Anthropic</a>’s API, which
+  reads the text and returns the structured line items. Anthropic processes the
+  image on our behalf and does not use it to train their models. The image and
+  the extracted data are then stored on our servers so the receipt stays in your
+  history.</p>
+
+  <h2>Community pricing — please read this part</h2>
+  <div class="note">
+    <p><strong>This setting is on by default.</strong> When it is on, the prices
+    you paid for grocery, household and personal-care items are pooled with other
+    users’ prices so everyone can see the typical price of an item at a given
+    store.</p>
+  </div>
+  <p>What is shared is the price of an item at a merchant — never your name, your
+  email, your receipts, your bank data, or anything that identifies you. Other
+  users only ever see a median price computed across many people, and one person’s
+  data cannot be singled out of it. Dining and general shopping purchases are never
+  included.</p>
+  <p>The setting is reciprocal: turning it off both stops your prices feeding other
+  people’s results and stops you seeing theirs. You can turn it off at any time under
+  <strong>Tag → Community Pricing</strong>.</p>
+
+  <h2>Who else processes your data</h2>
+  <p>We use a small number of services to run Byte. They act on our instructions
+  and are not permitted to use your data for their own purposes.</p>
+  <table>
+    <tr><th>Service</th><th>What it handles</th></tr>
+    <tr><td>Supabase</td><td>Accounts, sign-in, and the database</td></tr>
+    <tr><td>Fly.io</td><td>Server hosting and file storage</td></tr>
+    <tr><td>Plaid</td><td>The connection to your bank, if you make one</td></tr>
+    <tr><td>Anthropic</td><td>Reading the text off receipt images</td></tr>
+    <tr><td>RevenueCat</td><td>Subscription status</td></tr>
+    <tr><td>Apple</td><td>Payment for the subscription — we never see your card</td></tr>
+    <tr><td>Sentry</td><td>Crash and error reports</td></tr>
+  </table>
+  <p>Byte never receives your bank username or password. That is entered inside
+  Plaid’s own secure flow, and we only receive an access token plus the
+  transactions it returns. We are also never sent your card details — Apple
+  handles subscription payments entirely.</p>
+
+  <h2>How long we keep things, and how to delete them</h2>
+  <p>Your data stays until you remove it. You can delete an individual receipt at
+  any time, and you can disconnect a bank under <strong>Tag → Connected
+  Banks</strong>, which revokes our access token with Plaid immediately.</p>
+  <h3>Deleting your account</h3>
+  <p>Deleting your account from <strong>Tag</strong> removes your profile, your
+  receipts and their line items, your transactions, your budgets and shopping
+  lists, and your sign-in identity. We also revoke any bank connections with Plaid
+  as part of the same operation.</p>
+  <p><strong>Your receipt photos are deleted along with everything else</strong>,
+  unless you have turned on “Improve receipt scanning” in Tag. That setting is off
+  unless you switch it on, and it is the only thing that keeps your photos past
+  deletion — see below.</p>
+  <p>One thing is retained either way, and we would rather say so plainly than
+  bury it: <strong>de-identified parsing records</strong>. We keep a copy of the
+  text our receipt reader extracted — merchant, date, items, prices — with your
+  account identifier permanently removed, so we can measure how accurately it
+  reads receipts. These records contain no card details, no name and no account
+  reference, and are not connected to you.</p>
+  <p>Anonymous, aggregated community price data that has already been pooled
+  cannot be traced back to an individual and is not removed.</p>
+
+  <h2>“Improve receipt scanning” — optional, and off by default</h2>
+  <p>In <strong>Tag</strong> there is a setting called <em>Improve receipt
+  scanning</em>. It is off unless you turn it on, and every feature of Byte works
+  identically whether it is on or off — we will never restrict the app based on
+  this choice.</p>
+  <p>With it on, the photos of receipts you scan are kept so we can test and
+  improve how accurately Byte reads them, <strong>including after you delete your
+  account</strong>, at which point they are no longer linked to you or to any
+  account. We record which version of this explanation you agreed to, and when.</p>
+  <p>Please be aware that a receipt can show things you may not want kept — the
+  last four digits of your card, a store loyalty number, or pharmacy and medical
+  purchases. If any of that concerns you, leave the setting off.</p>
+  <p>You can turn it off at any time, which stops us keeping any future scans. If
+  you also want photos we already hold to be deleted, email
+  <a href="mailto:privacy@allbark.dev">privacy@allbark.dev</a> and we will remove
+  them — we keep enough of a reference to be able to honour that request.</p>
+  <p>These photos are never shown to other Byte users, never used for advertising,
+  and never sold.</p>
+
+  <h2>Your rights</h2>
+  <p>You can ask us for a copy of your data, ask us to correct it, or ask us to
+  delete it, by emailing the address below. Depending on where you live you may
+  also have the right to object to or restrict certain processing, and to complain
+  to your local data protection authority.</p>
+
+  <h2>Children</h2>
+  <p>Byte is not intended for children under 13, and we do not knowingly collect
+  their data. If you believe a child has created an account, contact us and we
+  will delete it.</p>
+
+  <h2>Security</h2>
+  <p>Traffic between the app and our servers is encrypted in transit, and access
+  to your data requires your authenticated session. No system is perfectly secure,
+  but we keep the number of services holding your data deliberately small.</p>
+
+  <h2>Changes</h2>
+  <p>If we change this policy we will update the date at the top of this page, and
+  we will tell you in the app if the change is significant.</p>
+
+  <h2>Contact</h2>
+  <p>Questions, data requests, or anything else:
+  <a href="mailto:privacy@allbark.dev">privacy@allbark.dev</a>.</p>
+</main>
+<footer>Byte — All Bark · <a href="/byte/privacy/">Privacy</a> · <a href="/byte/terms/">Terms</a></footer>
+</body>
+</html>
