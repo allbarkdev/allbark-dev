@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Byte Support</title>
+<meta name="description" content="Help with the Byte budgeting app: contact, subscriptions and account deletion." />
+<style>
+  :root {
+    --bg: #f4ecd8; --card: #fbf6ea; --ink: #3a2f1f; --muted: #6f6047;
+    --rule: #d8c9a8; --accent: #4a7a2c;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1b1710; --card: #241f16; --ink: #ece3d1; --muted: #a2937a;
+      --rule: #3d3527; --accent: #8cc063;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1b1710; --card: #241f16; --ink: #ece3d1; --muted: #a2937a;
+    --rule: #3d3527; --accent: #8cc063;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.65 ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif;
+    padding: 32px 16px 64px;
+  }
+  main { max-width: 720px; margin: 0 auto; background: var(--card);
+         border: 1px solid var(--rule); border-radius: 12px; padding: 32px 28px; }
+  h1 { font-size: 1.7rem; margin: 0 0 4px; }
+  h2 { font-size: 1.12rem; margin: 32px 0 8px; padding-top: 16px; border-top: 1px solid var(--rule); }
+  h2:first-of-type { border-top: 0; padding-top: 0; }
+  a { color: var(--accent); }
+  ol { padding-left: 20px; }
+  li { margin: 6px 0; }
+  .note { background: color-mix(in srgb, var(--accent) 10%, transparent);
+          border-left: 3px solid var(--accent); padding: 12px 14px; border-radius: 0 6px 6px 0; margin: 16px 0; }
+  footer { max-width: 720px; margin: 20px auto 0; color: var(--muted); font-size: .86rem; text-align: center; }
+  @media (max-width: 520px) { main { padding: 22px 18px; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>Byte Support</h1>
+  <p>Byte is a budgeting app made by All Bark. If something isn't working, a
+  receipt scanned wrong, or you just have a question, we'd like to hear about it.</p>
+
+  <div class="note">Email <a href="mailto:support@allbark.dev">support@allbark.dev</a>
+  and we'll get back to you, usually within two business days. If it's about a
+  receipt, a screenshot of it helps a lot.</div>
+
+  <h2>Subscriptions</h2>
+  <p>Byte Pro is billed through your Apple ID, so Apple handles payment and refunds.</p>
+  <ol>
+    <li><strong>Manage or cancel:</strong> in Byte, open <strong>Tag</strong> (your
+    avatar, top right) and tap <strong>Manage subscription</strong>. You can also go to
+    iPhone Settings → your name → Subscriptions.</li>
+    <li><strong>New phone or reinstalled?</strong> Tap <strong>Restore purchases</strong>
+    in Tag or on the paywall.</li>
+    <li><strong>Refunds</strong> are requested from Apple at
+    <a href="https://reportaproblem.apple.com">reportaproblem.apple.com</a>.</li>
+  </ol>
+
+  <h2>Deleting your account</h2>
+  <p>In Byte, open <strong>Tag</strong>, scroll to the bottom and tap
+  <strong>Delete account</strong>. This removes your account and data and disconnects
+  any linked banks. Deleting your account does not cancel an App Store subscription,
+  so cancel that first. See the <a href="/byte/privacy/">privacy policy</a> for exactly
+  what is removed.</p>
+
+  <h2>Privacy and data requests</h2>
+  <p>For a copy of your data, corrections or deletion requests, email
+  <a href="mailto:privacy@allbark.dev">privacy@allbark.dev</a>.</p>
+</main>
+<footer>Byte — All Bark · <a href="/byte/support/">Support</a> · <a href="/byte/privacy/">Privacy</a> · <a href="/byte/terms/">Terms</a></footer>
+</body>
+</html>
