@@ -1,17 +1,22 @@
 /* allbark.dev home and The Bark Blog: dark, warm and guard-dog green. */
 :root {
-  /* Dark is the house look. Light tokens stay for anyone who sets data-theme="light". */
+  /* Follows the system light/dark setting; dark when there isn't one. */
   --bg: #1b1710; --card: #241f16; --ink: #ece3d1; --muted: #a2937a;
   --rule: #3d3527; --accent: #8cc063; --accent-ink: #1b1710; --code: #2c261b;
   --serif: "Iowan Old Style", "Charter", "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
   --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif;
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  color-scheme: dark;
+  color-scheme: dark light;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #f4ecd8; --card: #fbf6ea; --ink: #3a2f1f; --muted: #6f6047;
+    --rule: #d8c9a8; --accent: #4a7a2c; --accent-ink: #fbf6ea; --code: #efe4ca;
+  }
 }
 :root[data-theme="light"] {
   --bg: #f4ecd8; --card: #fbf6ea; --ink: #3a2f1f; --muted: #6f6047;
   --rule: #d8c9a8; --accent: #4a7a2c; --accent-ink: #fbf6ea; --code: #efe4ca;
-  color-scheme: light;
 }
 
 * { box-sizing: border-box; }

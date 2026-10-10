@@ -17,8 +17,9 @@ no theme to maintain.
   new policy pages, add them as plain HTML under `/<app>/` and link them from its card there.
   `/social/*` is for our internal publishing tools: those pages stay live for platform review but
   aren't linked from the home page.
-- The home page and blog are dark-only (`assets/devlog/devlog.css`). The plain policy pages still
-  follow the visitor's system setting.
+- Every page follows the visitor's system light/dark setting and falls back to dark when there
+  isn't one. Dark tokens are the default in `assets/devlog/devlog.css` and in each policy page's
+  inline `<style>`; light tokens sit under `prefers-color-scheme: light`.
 - `_config.yml` holds site settings and the devlog name. `README.md`, this file, `Gemfile` and
   `_tools/` are excluded from the build.
 
