@@ -6,19 +6,21 @@
 <title>Byte Privacy Policy</title>
 <meta name="description" content="How the Byte app collects, uses, shares and deletes your data." />
 <style>
+  /* Follows the system light/dark setting; dark when there isn't one. */
   :root {
-    --bg: #f4ecd8; --card: #fbf6ea; --ink: #3a2f1f; --muted: #6f6047;
-    --rule: #d8c9a8; --accent: #4a7a2c;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #1b1710; --card: #241f16; --ink: #ece3d1; --muted: #a2937a;
-      --rule: #3d3527; --accent: #8cc063;
-    }
-  }
-  :root[data-theme="dark"] {
+    color-scheme: dark light;
     --bg: #1b1710; --card: #241f16; --ink: #ece3d1; --muted: #a2937a;
     --rule: #3d3527; --accent: #8cc063;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #f4ecd8; --card: #fbf6ea; --ink: #3a2f1f; --muted: #6f6047;
+      --rule: #d8c9a8; --accent: #4a7a2c;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #f4ecd8; --card: #fbf6ea; --ink: #3a2f1f; --muted: #6f6047;
+    --rule: #d8c9a8; --accent: #4a7a2c;
   }
   * { box-sizing: border-box; }
   body {
