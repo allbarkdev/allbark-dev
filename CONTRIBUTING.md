@@ -77,10 +77,17 @@ kind heart: a scrappy, good-natured guard dog.
   feedback that kicked it off or changed course, and what broke and how we fixed it.
 - Write as "we". Be honest, specific and a bit funny. No hype, no marketing fluff, no personal
   framing like "after bedtime".
+- Be open, briefly, that All Bark is one indie developer building with AI tooling. Don't hide it
+  and don't go into the weeds (no tool names or process detail). Don't name the developer.
+- No AI-generated art in posts; every image is a real screenshot. The site covers more than one
+  app, so don't claim "no AI art" for All Bark as a whole, only for the app a post is about when
+  that's true.
+- Feedback from the developer, testers or users is told as what was good and what we built on.
+  Never frame it as someone getting the rules (or anything else) wrong.
 - Only use facts that are in that week's notes. If something is unclear, ask in the notes repo
   instead of guessing. Nothing marked "Not public yet" goes in a post, a file name, an alt text or a
   commit message.
-- Don't name the app publicly until Justin confirms the name. Use a plain description ("our 5E
+- Don't name an unannounced app until its name is confirmed. Use a plain description ("our 5E
   character builder").
 - Don't use "Dungeons & Dragons", D&D logos, or Wizards of the Coast trademarks or art. "5E" and
   "compatible with fifth edition" are fine.
@@ -90,10 +97,10 @@ kind heart: a scrappy, good-natured guard dog.
 1. The app project commits weekly notes to the private `allbarkdev/allbark-content` repo at
    `devlog/notes/YYYY-Www.md` (plus screenshots) on Sunday evening.
 2. On Monday morning (Pacific), a routine checks for a `status: ready` notes file with no post yet.
-   If it finds one, it drafts the post on a local branch and **shows it to Justin in the project
-   thread for review**, rendered as it will look. It pushes nothing yet, because this repo is public.
+   If it finds one, it drafts the post on a local branch and **shows it in the project thread for
+   review**, rendered as it will look. It pushes nothing yet, because this repo is public.
    Questions about the notes go to `devlog/questions/YYYY-Www.md` in the notes repo.
-3. After Justin OKs the draft in the thread, it becomes a PR here. **Merging the PR publishes
-   the post.** Only Justin merges, and nothing is pushed straight to `main`.
+3. After the owner OKs the draft in the thread, it becomes a PR here. **Merging the PR publishes
+   the post.** Only the owner merges, and nothing is pushed straight to `main`.
 4. After a post merges, its URL is added to `devlog/published.md` in the notes repo so the app
    project can link to it.
