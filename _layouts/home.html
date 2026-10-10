@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="{{ site.lang | default: 'en' }}">
+<head>
+{% include devlog-head.html %}
+</head>
+<body class="home">
+<a class="skip" href="#content">Skip to content</a>
+<header class="masthead">
+  <a class="brand" href="{{ '/' | relative_url }}">{% include paw.html %}<span>{{ site.title }}</span></a>
+  <nav aria-label="Site">
+    <a href="{{ '/devlog/' | relative_url }}">Blog</a>
+    <a href="#apps">Apps</a>
+    <a href="{{ '/devlog/feed.xml' | relative_url }}">Feed</a>
+  </nav>
+</header>
+<main id="content">
+{{ content }}
+</main>
+<footer class="site-foot">
+  <p>{{ site.title }} · Questions about an app: <a href="mailto:support@allbark.dev">support@allbark.dev</a> · Privacy: <a href="mailto:privacy@allbark.dev">privacy@allbark.dev</a></p>
+</footer>
+</body>
+</html>

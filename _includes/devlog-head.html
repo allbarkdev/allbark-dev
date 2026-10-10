@@ -9,6 +9,7 @@
 {%- assign desc = page.description | default: dl.tagline -%}
 {%- assign og_image = page.image | default: dl.og_image -%}
 {%- assign og_alt = page.image_alt | default: "The Bark Blog, the All Bark devlog" -%}
+{%- assign og_site = page.site_name | default: dl.name -%}
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>{{ doc_title | escape }}</title>
@@ -19,7 +20,7 @@
 <link rel="stylesheet" href="{{ '/assets/devlog/devlog.css' | relative_url }}" />
 <link rel="icon" href="{{ '/assets/devlog/paw.svg' | relative_url }}" type="image/svg+xml" />
 
-<meta property="og:site_name" content="{{ dl.name }}" />
+<meta property="og:site_name" content="{{ og_site }}" />
 <meta property="og:type" content="{{ og_type }}" />
 <meta property="og:title" content="{{ page.title | default: dl.name | escape }}" />
 <meta property="og:description" content="{{ desc | strip_html | strip | escape }}" />
