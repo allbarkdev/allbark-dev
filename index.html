@@ -1,28 +1,76 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>All Bark</title>
-<link rel="alternate" type="application/atom+xml" title="The Bark Blog" href="/devlog/feed.xml" />
-<style>
-  :root { --bg:#f4ecd8; --ink:#3a2f1f; --muted:#6f6047; --accent:#4a7a2c; }
-  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-    --bg:#1b1710; --ink:#ece3d1; --muted:#a2937a; --accent:#8cc063; } }
-  body { margin:0; background:var(--bg); color:var(--ink); min-height:100vh;
-    display:flex; align-items:center; justify-content:center; padding:24px 16px;
-    font:16px/1.6 ui-sans-serif,-apple-system,"Segoe UI",Roboto,sans-serif; text-align:center; }
-  h1 { font-size:2rem; margin:0 0 6px; }
-  p { color:var(--muted); margin:0 0 16px; }
-  a { color:var(--accent); }
-</style>
-</head>
-<body>
-  <div>
-    <h1>All Bark</h1>
-    <p>Maker of Byte — taking a bite out of your budget.</p>
-    <p><a href="/byte/privacy/">Byte privacy policy</a> · <a href="/byte/terms/">Byte terms of use</a></p>
-    <p><a href="/devlog/">The Bark Blog</a>, our weekly devlog</p>
+---
+layout: home
+title: All Bark
+site_name: All Bark
+description: All Bark is a one-person indie studio building small apps with AI tooling. Read The Bark Blog, our weekly devlog, and find support and policy pages for Cerberus and Byte.
+---
+<section class="hero">
+  <h1>All bark, mostly heart.</h1>
+  <p class="dek">All Bark is a one-person indie studio. We build small, useful apps with a lot of help
+  from AI tooling, and every week we write up what we built, what broke and how we fixed it.</p>
+</section>
+
+<section class="blog" aria-labelledby="blog-title">
+  <div class="section-head">
+    <h2 id="blog-title">{% include paw.html %}{{ site.devlog.name }}</h2>
+    <p><a href="{{ '/devlog/' | relative_url }}">All posts</a> · <a href="{{ '/devlog/feed.xml' | relative_url }}">Feed</a></p>
   </div>
-</body>
-</html>
+{%- assign latest = site.posts.first %}
+{%- if latest %}
+  <a class="card feature" href="{{ latest.url | relative_url }}">
+    {%- if latest.image %}
+    <img src="{{ latest.image | relative_url }}" alt="{{ latest.image_alt | default: '' | escape }}" width="1200" height="630" loading="eager" />
+    {%- endif %}
+    <div class="feature-body">
+      <p class="meta">
+        <span class="kicker">Latest</span>
+        {%- if latest.week %}<span class="tag">{{ latest.week | split: "-" | last }}</span>{% endif %}
+        <time datetime="{{ latest.date | date_to_xmlschema }}">{{ latest.date | date: "%B %-d, %Y" }}</time>
+        {%- if latest.app %}<span class="dot" aria-hidden="true">·</span><span>{{ latest.app }}</span>{% endif %}
+      </p>
+      <h3>{{ latest.title | smartify }}</h3>
+      {%- if latest.description %}<p>{{ latest.description }}</p>{% endif %}
+    </div>
+  </a>
+  {%- if site.posts.size > 1 %}
+  <ol class="post-list compact">
+  {%- for post in site.posts offset: 1 limit: 3 %}
+    <li>
+      <a class="card" href="{{ post.url | relative_url }}">
+        <p class="meta">
+          {%- if post.week %}<span class="tag">{{ post.week | split: "-" | last }}</span>{% endif %}
+          <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %-d, %Y" }}</time>
+        </p>
+        <h3>{{ post.title | smartify }}</h3>
+      </a>
+    </li>
+  {%- endfor %}
+  </ol>
+  {%- endif %}
+{%- else %}
+  <p class="empty">The first entry is on its way. Grab the <a href="{{ '/devlog/feed.xml' | relative_url }}">feed</a> and it'll show up when it lands.</p>
+{%- endif %}
+</section>
+
+<section id="apps" class="apps" aria-labelledby="apps-title">
+  <div class="section-head">
+    <h2 id="apps-title">Apps</h2>
+    <p>What we're building, plus support and policies.</p>
+  </div>
+  <ul class="app-list">
+    <li class="card app">
+      <p class="meta"><span class="status">In progress</span></p>
+      <h3>Cerberus</h3>
+      <p>A guided, visual character builder for fifth edition, plus a table-side sheet you tap to roll
+      from. It's what we're building right now, and the blog follows it week by week.</p>
+      <p class="links"><a href="{{ '/devlog/' | relative_url }}">Read the build log</a></p>
+    </li>
+    <li class="card app">
+      <p class="meta"><span class="status">iPhone</span></p>
+      <h3>Byte</h3>
+      <p>Taking a bite out of your budget. Byte reads your receipts and bank transactions to track
+      spending and help you find the best local prices.</p>
+      <p class="links"><a href="/byte/support/">Support</a> <a href="/byte/privacy/">Privacy policy</a> <a href="/byte/terms/">Terms of use</a></p>
+    </li>
+  </ul>
+</section>

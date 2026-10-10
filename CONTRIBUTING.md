@@ -8,10 +8,17 @@ everything committed here is world-readable, drafts and branches included.
 GitHub Pages builds `main` with its built-in Jekyll. There is no Actions workflow, no plugins and
 no theme to maintain.
 
-- HTML files **without** front matter (`/`, `/byte/*`, `/social/*`) are copied byte-for-byte. Keep
+- HTML files **without** front matter (`/byte/*`, `/social/*`) are copied byte-for-byte. Keep
   them that way. App stores and platform reviewers link to these URLs, and they must never move:
   `/`, `/byte/privacy/`, `/byte/terms/`, `/byte/support/`, `/social/privacy/`, `/social/terms/`.
-- Files **with** front matter (the devlog) go through Jekyll and Liquid.
+- Files **with** front matter (the home page and the devlog) go through Jekyll and Liquid.
+- The home page (`index.html`, layout `_layouts/home.html`) leads with the latest Bark Blog post,
+  then an **Apps** section with each public app's support, privacy and terms links. When an app gets
+  new policy pages, add them as plain HTML under `/<app>/` and link them from its card there.
+  `/social/*` is for our internal publishing tools: those pages stay live for platform review but
+  aren't linked from the home page.
+- The home page and blog are dark-only (`assets/devlog/devlog.css`). The plain policy pages still
+  follow the visitor's system setting.
 - `_config.yml` holds site settings and the devlog name. `README.md`, this file, `Gemfile` and
   `_tools/` are excluded from the build.
 
