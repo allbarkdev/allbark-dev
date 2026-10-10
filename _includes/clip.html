@@ -1,0 +1,11 @@
+{%- comment -%}
+Short real screen recording. Never autoplays, so it's quiet and respects reduced motion. Usage:
+{% include clip.html src="/assets/devlog/2026-w40/door.mp4" poster="/assets/devlog/2026-w40/door-poster.png" label="What the clip shows" caption="Optional caption" %}
+{%- endcomment -%}
+<figure class="shot clip">
+  <video controls muted playsinline loop preload="none" poster="{{ include.poster | relative_url }}" aria-label="{{ include.label | escape }}"{% if include.width %} width="{{ include.width }}"{% endif %}{% if include.height %} height="{{ include.height }}"{% endif %}>
+    <source src="{{ include.src | relative_url }}" type="video/mp4" />
+    <a href="{{ include.src | relative_url }}">Watch the clip</a>
+  </video>
+  {%- if include.caption %}<figcaption>{{ include.caption | markdownify | remove: '<p>' | remove: '</p>' | strip }}</figcaption>{% endif %}
+</figure>

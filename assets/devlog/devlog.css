@@ -98,6 +98,10 @@ h1, h2, h3 { font-family: var(--serif); line-height: 1.25; text-wrap: balance; }
   border: 1px solid var(--rule); border-radius: 14px; background: var(--card);
 }
 .shot.wide img { max-width: 100%; border-radius: 10px; }
+.shot video {
+  display: block; margin: 0 auto; max-width: min(100%, 360px); max-height: 75vh; width: 100%; height: auto;
+  border: 1px solid var(--rule); border-radius: 14px; background: var(--card);
+}
 .shot figcaption { color: var(--muted); font-size: .9rem; margin-top: 8px; }
 
 .post-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--rule); }

@@ -59,7 +59,12 @@ kind heart: a scrappy, good-natured guard dog.
    ```
 
    Phone captures display phone-sized. Add `wide=true` for landscape or desktop captures. Alt text
-   is required: describe what the screenshot shows, not what it is.
+   is required: describe what the screenshot shows, not what it is. Crop very tall full-page
+   captures to the part the paragraph is about.
+
+   Short real screen recordings (MP4) use `{% include clip.html src=... poster=... label=... %}`.
+   They never autoplay. Make the poster with
+   `ffmpeg -ss 0.2 -i clip.mp4 -frames:v 1 clip-poster.png`.
 4. **Open Graph card.** Run `python3 _tools/og_image.py _posts/<post>.md` (it needs Pillow). It
    writes the 1200×630 PNG named in `image`, with the title, the week badge and `og_shot` if one is
    set. Commit it with the post. `python3 _tools/og_image.py --default` rebuilds the card for the
@@ -85,9 +90,10 @@ kind heart: a scrappy, good-natured guard dog.
 1. The app project commits weekly notes to the private `allbarkdev/allbark-content` repo at
    `devlog/notes/YYYY-Www.md` (plus screenshots) on Sunday evening.
 2. On Monday morning (Pacific), a routine checks for a `status: ready` notes file with no post yet.
-   If it finds one, it drafts the post on a branch and opens a PR here. Questions go to
-   `devlog/questions/YYYY-Www.md` in the notes repo.
-3. **Justin reviews the PR. Merging is publishing.** Nobody else merges, and nothing is pushed
-   straight to `main`.
+   If it finds one, it drafts the post on a local branch and **shows it to Justin in the project
+   thread for review**, rendered as it will look. It pushes nothing yet, because this repo is public.
+   Questions about the notes go to `devlog/questions/YYYY-Www.md` in the notes repo.
+3. After Justin OKs the draft in the thread, it becomes a PR here. **Merging the PR publishes
+   the post.** Only Justin merges, and nothing is pushed straight to `main`.
 4. After a post merges, its URL is added to `devlog/published.md` in the notes repo so the app
    project can link to it.
