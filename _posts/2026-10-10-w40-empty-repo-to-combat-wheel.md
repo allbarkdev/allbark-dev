@@ -4,7 +4,7 @@ description: "A 5E character builder, a tap-to-roll table sheet and three versio
 week: 2026-W40
 app: 5E character builder
 image: /assets/devlog/2026-w40/og.png
-image_alt: "The Bark Log, week 40: Week one, from an empty repo to a combat wheel, beside a screenshot of the combat wheel"
+image_alt: "The Bark Blog, week 40: Week one, from an empty repo to a combat wheel, beside a screenshot of the combat wheel"
 og_shot: /assets/devlog/2026-w40/wheel-wedges.png
 ---
 
@@ -161,4 +161,4 @@ focus pass, previews of the bonus when you pick a skill, icons on the builder ca
 and an inventory, Metamagic when casting, a strict rules mode, an in-app feedback button, a fix for
 crit damage, and effect chips in combat.
 
-That's week one. The Bark Log will be back next week with what came next.
+That's week one. The Bark Blog will be back next week with what came next.
