@@ -1,0 +1,23 @@
+---
+layout: devlog
+---
+<article class="post">
+  <header class="post-head">
+    <p class="meta">
+      {%- if page.week %}<span class="tag" title="ISO week">{{ page.week | split: "-" | last }}</span>{% endif %}
+      <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time>
+      {%- if page.app %}<span class="dot" aria-hidden="true">·</span><span>{{ page.app }}</span>{% endif %}
+    </p>
+    <h1>{{ page.title | smartify }}</h1>
+    {%- if page.description %}<p class="dek">{{ page.description }}</p>{% endif %}
+  </header>
+  <div class="prose">
+{{ content }}
+  </div>
+  {%- if page.previous or page.next %}
+  <nav class="post-nav" aria-label="More posts">
+    {%- if page.previous %}<a rel="prev" href="{{ page.previous.url | relative_url }}"><small>Previous week</small>{{ page.previous.title | smartify }}</a>{% else %}<span></span>{% endif %}
+    {%- if page.next %}<a rel="next" href="{{ page.next.url | relative_url }}"><small>Next week</small>{{ page.next.title | smartify }}</a>{% endif %}
+  </nav>
+  {%- endif %}
+</article>
