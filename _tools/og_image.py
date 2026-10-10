@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render a 1200x630 Open Graph card for a Bark Log post.
+"""Render a 1200x630 Open Graph card for a Bark Blog post.
 
 GitHub Pages can't generate images, so we render them when a post is drafted
 and commit the PNG next to the post's screenshots.
@@ -134,7 +134,7 @@ def render(title, week=None, when=None, shot=None, out=None):
 
     # Brand line
     img.alpha_composite(paw(44, ACCENT + (255,)), (PAD, PAD - 4))
-    d.text((PAD + 56, PAD + 18), "THE BARK LOG", font=font("Inter-Medium.otf", 26), fill=ACCENT, anchor="lm")
+    d.text((PAD + 56, PAD + 18), "THE BARK BLOG", font=font("Inter-Medium.otf", 26), fill=ACCENT, anchor="lm")
 
     # Title
     fnt, lines, size = fit_title(d, title, text_right - PAD)

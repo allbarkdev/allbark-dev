@@ -18,7 +18,7 @@ kramdown:
 permalink: /devlog/:year/:title/
 
 devlog:
-  name: The Bark Log
+  name: The Bark Blog
   tagline: What we built this week, what broke, and how we fixed it.
   author: All Bark
   og_image: /assets/devlog/og-default.png

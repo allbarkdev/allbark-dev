@@ -18,7 +18,7 @@ no theme to maintain.
 Local preview, if you want one: `bundle install && bundle exec jekyll serve`, then open
 <http://localhost:4000/devlog/>. The `Gemfile` pins the same `github-pages` gem Pages uses.
 
-## The Bark Log (devlog)
+## The Bark Blog (devlog)
 
 A weekly deep dive into what got built that week, told from the developer's side. Tough outside,
 kind heart: a scrappy, good-natured guard dog.
