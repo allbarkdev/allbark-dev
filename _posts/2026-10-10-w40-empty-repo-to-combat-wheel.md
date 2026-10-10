@@ -13,6 +13,11 @@ a guided character builder for 5E, a table-side sheet you tap to roll from, and 
 designed three times in two days. All twelve classes from the 5E System Reference Document are in,
 levels 1 to 20, and that part was done by day three.
 
+A quick word on "we", since it'll come up every week. All Bark is one indie developer building
+with AI tooling. We won't get into the weeds of it here, but we're not going to pretend otherwise
+either. What we do keep out is AI art: there's none in this app, and every image in these posts is a
+real screenshot.
+
 That's too much for one post, so this one sticks to the two stories that shaped everything else:
 a rule we set on day one, and how a turn of combat turned into a wheel.
 
@@ -48,7 +53,7 @@ goes up, but the wounds you're carrying stay put, because that's what actually h
 Nothing derived is ever saved, so a character also survives rule fixes. If we get a number wrong
 and fix it, every saved character is right the next time it opens.
 
-We also had to pick a platform. Justin was drawn to Flutter for a game-like feel. The honest
+We also had to pick a platform. Flutter was tempting for a game-like feel. The honest
 comparison was that Flutter's 2D edge is small for an app like this and shows up mostly on low-end
 Android phones. The web gives you a sheet you can open on a laptop at the table, or send to your
 DM as a link, and an offline web app for free. We'd also already shipped Byte on Svelte, which
@@ -61,7 +66,7 @@ gave us a template to start from. So we went with Svelte, web first, wrapped for
 The first combat view tracked your Action, Bonus Action and Reaction each turn and listed
 everything you could do with them. It worked. It also read like a restaurant menu, not a turn.
 
-Justin's notes on it came in four parts. The action bar belongs at the bottom. The "next roll"
+The feedback on it was the good, specific kind, and it came in four parts. The action bar belongs at the bottom. The "next roll"
 footer takes up a lot of room for something you rarely touch. Cards for things the turn guide
 already offers shouldn't show up twice. And the common stuff, attacking and casting, deserves a
 bigger stage than "Study". Most of all, clicking Attack should *lead* somewhere: to your next
@@ -76,21 +81,19 @@ turn into a sequence, "Attack 2 of 3", with **Next attack** and **Done attacking
 
 {% include shot.html src="/assets/devlog/2026-w40/attack-flow.png" alt="Mid-turn Fighter. The Attack section glows with the label Attack 2 of 2 and weapon tiles for Unarmed Strike, Greatsword, Flail and Javelin, plus a Done attacking button. Bonus Action and Reaction sections sit below." caption="Mid-turn, the Attack action is a sequence you step through." %}
 
-One idea from this round turned into a dead end. Justin's sketch of the attack flow included
-swapping an attack for a cantrip. In the SRD 5.2 rules only monsters get to do that. So instead the
-flow offers what the rules really do tie to an attack: the extra attack from a Light weapon (and
-Nick, which folds that extra attack into the Attack action itself), and once-per-turn riders like
-Sneak Attack.
+The sequence also surfaces the things the rules tie to an attack: the extra attack from a Light
+weapon (and Nick, which folds that extra attack into the Attack action itself), and once-per-turn
+riders like Sneak Attack.
 
 ### Version three: the wheel
 
-Then Justin dug up an old project. Years ago he built an infinite radial menu in Unity, designed
-for combat action menus in games, especially on mobile:
+Then an old project came off the shelf: an infinite radial menu built in Unity years ago, designed
+for combat action menus in games, especially on mobile. The pitch was simple:
 
 > Have the HP card shown as a circle in the middle with action, bonus action, reaction buttons
 > surrounding it.
 
-He also asked for a green-to-red glow around the HP, for a little extra pizzazz.
+Plus a green-to-red glow around the HP, for a little extra pizzazz.
 
 It fit better than we expected, because a turn was already a tree: Action, Bonus Action or
 Reaction, then attacks, spells or features, then the thing that actually does it. That meant the
@@ -106,8 +109,9 @@ Our first try put three rounded buttons at 12, 4 and 8 o'clock. It looked lopsid
 we nudged it, because a rectangle is wider than it is tall, and no amount of padding fixes that.
 The fix was a different shape: three equal 120° segments.
 
-Justin still didn't like the gaps between the buttons on the top layer. He wanted "Rhombus like buttons coming out from the center like the old Simon says", plus "an almost
-mechanical animation like a sci fi door opening and closing."
+The next round of feedback pushed it further: close the gaps on the top layer, with "Rhombus like
+buttons coming out from the center like the old Simon says", and give it "an almost mechanical
+animation like a sci fi door opening and closing."
 
 So we got touching wedges with dark seams, and a door. When you move between layers, the old panels
 twist into the center, the HP circle gives a little clunk, and the new panels twist out one by one
@@ -148,15 +152,11 @@ The review step now labels every feature, skill and tool with where it came from
 
 {% include shot.html src="/assets/devlog/2026-w40/review-sources.png" alt="The builder's review step listing features and feats, each labeled with its source, such as Origin Languages from background Soldier, Skillful from species Human, and Second Wind from class Fighter." caption="Every line says where it came from." %}
 
-The tester was right about most things and wrong about one. He flagged that multiclassing listed an
-ability requirement for the class he already had. But SRD 5.2 really does require a 13 in your
-current class's main ability as well as the new one's. The rule stayed, and the badges now say
-"to multiclass out" and "to multiclass in" so it stops looking like a bug. A question about weapon
-proficiency turned out to be correct per the rules too. The real confusion was Weapon Mastery, which
-now explains itself right where you pick it.
+The notes also showed us where labels could say more. Multiclass requirement badges now read "to
+multiclass out" and "to multiclass in", and Weapon Mastery explains itself right where you pick it.
 
-He also asked for an equipment store. Justin's reaction: the SRD has equipment, and new characters
-start with gold to buy their own gear, so it should be there. It shipped the same day.
+One request we especially liked was an equipment store. The SRD has equipment, and new characters
+start with gold to buy their own gear, so it made sense to have one. It shipped the same day.
 
 ## Also in the pile
 
