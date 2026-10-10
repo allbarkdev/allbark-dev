@@ -77,8 +77,9 @@ kind heart: a scrappy, good-natured guard dog.
   feedback that kicked it off or changed course, and what broke and how we fixed it.
 - Write as "we". Be honest, specific and a bit funny. No hype, no marketing fluff, no personal
   framing like "after bedtime".
-- Be open, briefly, that All Bark is one indie developer building with AI tooling. Don't hide it
-  and don't go into the weeds (no tool names or process detail). Don't name the developer.
+- Keep posts to the dev work. Don't name the developer, and don't discuss how the work gets done
+  (tooling, process). That openness about being a one-person studio building with AI tooling
+  belongs on the site's other pages, not in posts.
 - No AI-generated art in posts; every image is a real screenshot. The site covers more than one
   app, so don't claim "no AI art" for All Bark as a whole, only for the app a post is about when
   that's true.
