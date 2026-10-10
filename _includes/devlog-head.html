@@ -1,0 +1,34 @@
+{%- assign dl = site.devlog -%}
+{%- if page.layout == "post" -%}
+  {%- assign doc_title = page.title | append: " · " | append: dl.name -%}
+  {%- assign og_type = "article" -%}
+{%- else -%}
+  {%- assign doc_title = page.title | default: dl.name -%}
+  {%- assign og_type = "website" -%}
+{%- endif -%}
+{%- assign desc = page.description | default: dl.tagline -%}
+{%- assign og_image = page.image | default: dl.og_image -%}
+{%- assign og_alt = page.image_alt | default: "The Bark Log, the All Bark devlog" -%}
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{{ doc_title | escape }}</title>
+<meta name="description" content="{{ desc | strip_html | strip | escape }}" />
+<meta name="color-scheme" content="light dark" />
+<link rel="canonical" href="{{ page.url | absolute_url }}" />
+<link rel="alternate" type="application/atom+xml" title="{{ dl.name }}" href="{{ '/devlog/feed.xml' | absolute_url }}" />
+<link rel="stylesheet" href="{{ '/assets/devlog/devlog.css' | relative_url }}" />
+<link rel="icon" href="{{ '/assets/devlog/paw.svg' | relative_url }}" type="image/svg+xml" />
+
+<meta property="og:site_name" content="{{ dl.name }}" />
+<meta property="og:type" content="{{ og_type }}" />
+<meta property="og:title" content="{{ page.title | default: dl.name | escape }}" />
+<meta property="og:description" content="{{ desc | strip_html | strip | escape }}" />
+<meta property="og:url" content="{{ page.url | absolute_url }}" />
+<meta property="og:image" content="{{ og_image | absolute_url }}" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="{{ og_alt | escape }}" />
+{%- if og_type == "article" %}
+<meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}" />
+{%- endif %}
+<meta name="twitter:card" content="summary_large_image" />

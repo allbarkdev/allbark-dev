@@ -1,0 +1,34 @@
+# allbark.dev — built by GitHub Pages' own Jekyll (no Actions, no plugins).
+# Plain .html pages without front matter (/, /byte/*, /social/*) are copied
+# through untouched, so their URLs never change. See CONTRIBUTING.md.
+
+title: All Bark
+url: https://allbark.dev
+baseurl: ""
+timezone: America/Los_Angeles
+lang: en
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+  auto_ids: true
+
+# Posts live in _posts/YYYY-MM-DD-wNN-slug.md and publish at /devlog/YYYY/wNN-slug/
+permalink: /devlog/:year/:title/
+
+devlog:
+  name: The Bark Log
+  tagline: What we built this week, what broke, and how we fixed it.
+  author: All Bark
+  og_image: /assets/devlog/og-default.png
+
+exclude:
+  - README.md
+  - CONTRIBUTING.md
+  - Gemfile
+  - Gemfile.lock
+  - _tools
+  - vendor
+  - node_modules
+  - .DS_Store

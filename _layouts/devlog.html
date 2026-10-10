@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="{{ site.lang | default: 'en' }}">
+<head>
+{% include devlog-head.html %}
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+<header class="masthead">
+  <a class="brand" href="{{ '/devlog/' | relative_url }}">{% include paw.html %}<span>{{ site.devlog.name }}</span></a>
+  <nav aria-label="Site">
+    <a href="{{ '/' | relative_url }}">All Bark</a>
+    <a href="{{ '/devlog/feed.xml' | relative_url }}">Feed</a>
+  </nav>
+</header>
+<main id="content">
+{{ content }}
+</main>
+<footer class="site-foot">
+  <p>{{ site.devlog.name }} is the weekly devlog of <a href="{{ '/' | relative_url }}">All Bark</a>, a one-person indie studio.
+  Every screenshot is a real capture from the app. Follow along with the <a href="{{ '/devlog/feed.xml' | relative_url }}">Atom feed</a>.</p>
+</footer>
+</body>
+</html>
