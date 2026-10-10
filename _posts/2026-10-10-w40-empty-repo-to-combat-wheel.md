@@ -13,11 +13,6 @@ a guided character builder for 5E, a table-side sheet you tap to roll from, and 
 designed three times in two days. All twelve classes from the 5E System Reference Document are in,
 levels 1 to 20, and that part was done by day three.
 
-A quick word on "we", since it'll come up every week. All Bark is one indie developer building
-with AI tooling. We won't get into the weeds of it here, but we're not going to pretend otherwise
-either. What we do keep out is AI art: there's none in this app, and every image in these posts is a
-real screenshot.
-
 That's too much for one post, so this one sticks to the two stories that shaped everything else:
 a rule we set on day one, and how a turn of combat turned into a wheel.
 
