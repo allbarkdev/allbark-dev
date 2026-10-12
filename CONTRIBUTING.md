@@ -42,7 +42,9 @@ kind heart: a scrappy, good-natured guard dog.
 
 ### Writing a post
 
-1. **File name.** `_posts/2026-10-12-w41-short-slug.md`. The date is the day the post is drafted.
+1. **File name.** `_posts/2026-10-11-w41-short-slug.md`. The date is the day the post is drafted,
+   in Pacific time (the site's `timezone`). The weekly routine runs Sunday at 8pm Pacific, so that's
+   the Sunday that closes the ISO week, even though it's already Monday in UTC.
    **Never use a future date**, because Jekyll silently skips future-dated posts and the merge would
    publish nothing. The slug becomes the URL, so keep it short and don't change it after merging.
 2. **Front matter.**
@@ -85,6 +87,12 @@ kind heart: a scrappy, good-natured guard dog.
   feedback that kicked it off or changed course, and what broke and how we fixed it.
 - Write as "we". Be honest, specific and a bit funny. No hype, no marketing fluff, no personal
   framing like "after bedtime".
+- Sound like the developer talking, not a press release. Casual and conversational: contractions,
+  short sentences, plain words ("tweaked", "tossed", "nope"), a little self-deprecating, with an
+  occasional "honestly" or "pretty". Game references are welcome when they come from the notes.
+  Keep the jokes in captions and asides, not in the facts.
+- Don't quote the developer's feedback directly. Paraphrase it into the post's own voice ("the
+  idea was...", "the better idea:") so the story keeps the why without publishing private messages.
 - Keep posts to the dev work. Don't name the developer, and don't discuss how the work gets done
   (tooling, process). That openness about being a one-person studio building with AI tooling
   belongs on the site's other pages, not in posts.
@@ -97,7 +105,7 @@ kind heart: a scrappy, good-natured guard dog.
   instead of guessing. Nothing marked "Not public yet" goes in a post, a file name, an alt text or a
   commit message.
 - Don't name an unannounced app until its name is confirmed. Use a plain description ("our 5E
-  character builder").
+  character builder"). Cerberus is confirmed and can be named.
 - Don't use "Dungeons & Dragons", D&D logos, or Wizards of the Coast trademarks or art. "5E" and
   "compatible with fifth edition" are fine.
 
@@ -105,9 +113,9 @@ kind heart: a scrappy, good-natured guard dog.
 
 1. The app project commits weekly notes to the private `allbarkdev/allbark-content` repo at
    `devlog/notes/YYYY-Www.md` (plus screenshots) on Sunday evening.
-2. On Monday morning (Pacific), a routine checks for a `status: ready` notes file with no post yet.
-   If it finds one, it drafts the post on a local branch and **shows it in the project thread for
-   review**, rendered as it will look. It pushes nothing yet, because this repo is public.
+2. On Sunday at 8pm (Pacific), after the notes land, a routine checks for a `status: ready` notes
+   file with no post yet. If it finds one, it drafts the post on a local branch and **shows it in the
+   project thread for review**, rendered as it will look. It pushes nothing yet, because this repo is public.
    Questions about the notes go to `devlog/questions/YYYY-Www.md` in the notes repo.
 3. After the owner OKs the draft in the thread, it becomes a PR here. **Merging the PR publishes
    the post.** Only the owner merges, and nothing is pushed straight to `main`.

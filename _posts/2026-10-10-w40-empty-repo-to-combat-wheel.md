@@ -83,10 +83,8 @@ riders like Sneak Attack.
 ### Version three: the wheel
 
 Then an old project came off the shelf: an infinite radial menu built in Unity years ago, designed
-for combat action menus in games, especially on mobile. The pitch was simple:
-
-> Have the HP card shown as a circle in the middle with action, bonus action, reaction buttons
-> surrounding it.
+for combat action menus in games, especially on mobile. The pitch was simple: put
+HP in a circle in the middle, with Action, Bonus Action and Reaction buttons around it.
 
 Plus a green-to-red glow around the HP, for a little extra pizzazz.
 
@@ -104,9 +102,9 @@ Our first try put three rounded buttons at 12, 4 and 8 o'clock. It looked lopsid
 we nudged it, because a rectangle is wider than it is tall, and no amount of padding fixes that.
 The fix was a different shape: three equal 120° segments.
 
-The next round of feedback pushed it further: close the gaps on the top layer, with "Rhombus like
-buttons coming out from the center like the old Simon says", and give it "an almost mechanical
-animation like a sci fi door opening and closing."
+The next round of feedback pushed it further: close the gaps on the top layer with diamond-shaped
+buttons fanning out from the center, like the old Simon game, and give the layer change a mechanical
+animation, like a sci-fi door sliding open and shut.
 
 So we got touching wedges with dark seams, and a door. When you move between layers, the old panels
 twist into the center, the HP circle gives a little clunk, and the new panels twist out one by one
