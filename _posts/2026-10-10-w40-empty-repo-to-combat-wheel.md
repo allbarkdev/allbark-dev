@@ -1,6 +1,6 @@
 ---
 title: "Week one: from an empty repo to a combat wheel"
-description: "A 5E character builder, a tap-to-roll table sheet and three versions of a combat screen in seven days. Here's the rule we set on day one, and how the turn became a wheel."
+description: "A 5E character builder, a tap-to-roll table sheet and three versions of a combat screen in seven days. Here's the rule I set on day one, and how the turn became a wheel."
 week: 2026-W40
 app: 5E character builder
 image: /assets/devlog/2026-w40/og.png
@@ -8,13 +8,13 @@ image_alt: "The Bark Blog, week 40: Week one, from an empty repo to a combat whe
 og_shot: /assets/devlog/2026-w40/wheel-wedges.png
 ---
 
-Seven days ago the repo for our new app was empty. Seventy-three merged pull requests later it's
-a guided character builder for 5E, a table-side sheet you tap to roll from, and a combat mode we
-designed three times in two days. All twelve classes from the 5E System Reference Document are in,
-levels 1 to 20, and that part was done by day three.
+Seven days ago the repo for my new app was empty. Seventy-three merged pull requests later, every one
+of them built with Opus, it's a guided character builder for 5E, a table-side sheet you tap to roll
+from, and a combat mode we designed three times in two days. All twelve classes from the 5E System
+Reference Document are in, levels 1 to 20, and that part was done by day three.
 
-That's too much for one post, so this one sticks to the two stories that shaped everything else:
-a rule we set on day one, and how a turn of combat turned into a wheel.
+That's way too much for one post, so this one sticks to the two stories that shaped everything
+else: a rule I set on day one, and how a turn of combat turned into a wheel.
 
 ## Day one: save the choices, never the numbers
 
@@ -23,7 +23,7 @@ your proficiency bonus, your class, maybe your background, maybe a feat. Store t
 every rules fix turns into a data migration, and every screen has to be careful not to let you
 build something illegal.
 
-So on day one we decided that a character is saved as **the list of choices the player made**, and
+So on day one I decided a character gets saved as **the list of choices the player made**, and
 nothing else. A pure rules engine re-derives the whole sheet from those choices every time. The
 builder doesn't decide what to ask you next. It asks the engine which questions are still open and
 only shows those.
@@ -42,17 +42,18 @@ rests followed the same day. The engine's test suite went from 53 to 81 tests on
 
 {% include shot.html src="/assets/devlog/2026-w40/sheet-advantage.png" alt="A Fighter's table sheet with saving throws and skills listed. Athletics carries an ADV badge, and a roll card shows two d20s, 11 and 2, with the 11 kept for a total of 16." caption="Athletics with advantage: roll two, keep the 11, add 5." %}
 
-One small detail we like: HP is stored as **damage taken**, not current HP. Level up and your max HP
-goes up, but the wounds you're carrying stay put, because that's what actually happened.
+One small detail I really like: HP is stored as **damage taken**, not current HP. Level up and
+your max HP goes up, but the wounds you're carrying stay put, because that's what actually
+happened.
 
 Nothing derived is ever saved, so a character also survives rule fixes. If we get a number wrong
 and fix it, every saved character is right the next time it opens.
 
-We also had to pick a platform. Flutter was tempting for a game-like feel. The honest
-comparison was that Flutter's 2D edge is small for an app like this and shows up mostly on low-end
-Android phones. The web gives you a sheet you can open on a laptop at the table, or send to your
-DM as a link, and an offline web app for free. We'd also already shipped Byte on Svelte, which
-gave us a template to start from. So we went with Svelte, web first, wrapped for iOS and Android.
+I also had to pick a platform. Flutter was tempting for a game-like feel. The honest comparison
+was that Flutter's 2D edge is small for an app like this and shows up mostly on low-end Android
+phones. The web gives you a sheet you can open on a laptop at the table, or send to your DM as a
+link, and an offline web app for free. I'd also already shipped Byte on Svelte, which gave us a
+template to start from. So I went with Svelte, web first, wrapped for iOS and Android.
 
 ## Combat, three ways in two days
 
@@ -61,12 +62,11 @@ gave us a template to start from. So we went with Svelte, web first, wrapped for
 The first combat view tracked your Action, Bonus Action and Reaction each turn and listed
 everything you could do with them. It worked. It also read like a restaurant menu, not a turn.
 
-The feedback on it was the good, specific kind, and it came in four parts. The action bar belongs at the bottom. The "next roll"
-footer takes up a lot of room for something you rarely touch. Cards for things the turn guide
-already offers shouldn't show up twice. And the common stuff, attacking and casting, deserves a
-bigger stage than "Study". Most of all, clicking Attack should *lead* somewhere: to your next
-attack, or to the things that ride along with one. It shouldn't just leave every other action
-sitting there.
+I had four notes on it. The action bar belongs at the bottom. The "next roll" footer takes up a
+lot of room for something you rarely touch. Cards for things the turn guide already offers
+shouldn't show up twice. And the common stuff, attacking and casting, deserves a bigger stage than
+"Study". Most of all, clicking Attack should *lead* somewhere: to your next attack, or to the
+things that ride along with one. It shouldn't just leave every other action sitting there.
 
 ### Version two: a turn with a direction
 
@@ -82,15 +82,12 @@ riders like Sneak Attack.
 
 ### Version three: the wheel
 
-Then an old project came off the shelf: an infinite radial menu built in Unity years ago, designed
-for combat action menus in games, especially on mobile. The pitch was simple:
+Then I pulled an old project off the shelf: an infinite radial menu I built in Unity years ago,
+designed for combat action menus in games, especially on mobile. My pitch was simple: put HP in a
+circle in the middle, with Action, Bonus Action and Reaction buttons around it. Plus a green-to-red
+glow around the HP, for a little extra pizzazz.
 
-> Have the HP card shown as a circle in the middle with action, bonus action, reaction buttons
-> surrounding it.
-
-Plus a green-to-red glow around the HP, for a little extra pizzazz.
-
-It fit better than we expected, because a turn was already a tree: Action, Bonus Action or
+It fit better than I expected, because a turn was already a tree: Action, Bonus Action or
 Reaction, then attacks, spells or features, then the thing that actually does it. That meant the
 wheel could be a new *view* over the same engine state, not a second combat system to keep in sync.
 Day one's rule paid off again. Pick something and it moves to the center with its details and a
@@ -100,17 +97,17 @@ Day one's rule paid off again. Pick something and it moves to the center with it
 
 ### Rectangles around a circle never look right
 
-Our first try put three rounded buttons at 12, 4 and 8 o'clock. It looked lopsided whichever way
+The first try put three rounded buttons at 12, 4 and 8 o'clock. It looked lopsided whichever way
 we nudged it, because a rectangle is wider than it is tall, and no amount of padding fixes that.
 The fix was a different shape: three equal 120° segments.
 
-The next round of feedback pushed it further: close the gaps on the top layer, with "Rhombus like
-buttons coming out from the center like the old Simon says", and give it "an almost mechanical
-animation like a sci fi door opening and closing."
+Then I pushed it further. I wanted the gaps on the top layer gone, with diamond-shaped buttons
+fanning out from the center like the old Simon game, and a mechanical animation for changing
+layers, like a sci-fi door sliding open and shut.
 
-So we got touching wedges with dark seams, and a door. When you move between layers, the old panels
-twist into the center, the HP circle gives a little clunk, and the new panels twist out one by one
-with a slight overshoot. With reduced motion turned on, the layer just swaps.
+So Opus built touching wedges with dark seams, and a door. When you move between layers, the old
+panels twist into the center, the HP circle gives a little clunk, and the new panels twist out one
+by one with a slight overshoot. With reduced motion turned on, the layer just swaps.
 
 {% include shot.html src="/assets/devlog/2026-w40/wheel-wedges.png" alt="The combat wheel on a Sorcerer's sheet: HP 72 of 72 in a green ring at the center, surrounded by three touching wedges for Action, Bonus Action and Reaction, with the round bar and spell slots below." caption="Three touching wedges, HP in the middle." %}
 
@@ -126,12 +123,12 @@ A few more things the round shape made us think about:
   doesn't fit spins, with arrows. Most rings never need to.
 - **A bug we only found by re-checking.** After the wheel shipped, we re-ran a Rogue's turn and
   rolled damage before closing the result. The wheel marked the Nick extra attack "Action used",
-  which it wasn't. We fixed it in the same change.
+  which it wasn't. Fixed in the same change.
 
 ## Our first outside tester
 
-This week our Android tester went through the builder and sent 17 numbered notes, plus
-three more comments. All but two were handled in a single change.
+This week our Android tester went through the builder and sent 17 numbered notes, plus three more
+comments. All but two were handled in a single change.
 
 The biggest one: picking a species, class or background auto-advanced right past the tab that
 explained what it gives you, so nobody ever saw it. Now tapping a card opens what it gives you right
@@ -150,8 +147,8 @@ The review step now labels every feature, skill and tool with where it came from
 The notes also showed us where labels could say more. Multiclass requirement badges now read "to
 multiclass out" and "to multiclass in", and Weapon Mastery explains itself right where you pick it.
 
-One request we especially liked was an equipment store. The SRD has equipment, and new characters
-start with gold to buy their own gear, so it made sense to have one. It shipped the same day.
+One request I especially liked was an equipment store. The SRD has equipment, and new characters
+start with gold to buy their own gear, so I wanted it in 1.0. It shipped the same day.
 
 ## Also in the pile
 
