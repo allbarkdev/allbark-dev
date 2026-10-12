@@ -85,25 +85,28 @@ kind heart: a scrappy, good-natured guard dog.
 - Lead with the work. Pick the strongest one or two stories of the week and go deep rather than
   listing everything. Cover what shipped, the problem it solved, why we went that direction, the
   feedback that kicked it off or changed course, and what broke and how we fixed it.
-- Write as "we". Be honest, specific and a bit funny. No hype, no marketing fluff, no personal
-  framing like "after bedtime".
+- Write from the developer's point of view. "I" is the developer (never named): their calls, their
+  ideas, what they tested. "We" is the developer and the AI models working together. Be honest,
+  specific and a bit funny. No hype, no marketing fluff, no personal framing like "after bedtime".
+- Be open about the AI work without forcing it. When a model's part comes up naturally, name it
+  ("Opus built...", "Fable handled..."). Check who did what in the app repo's `Co-Authored-By`
+  commit trailers; don't guess.
 - Sound like the developer talking, not a press release. Casual and conversational: contractions,
   short sentences, plain words ("tweaked", "tossed", "nope"), a little self-deprecating, with an
   occasional "honestly" or "pretty". Game references are welcome when they come from the notes.
   Keep the jokes in captions and asides, not in the facts.
-- Don't quote the developer's feedback directly. Paraphrase it into the post's own voice ("the
-  idea was...", "the better idea:") so the story keeps the why without publishing private messages.
-- Keep posts to the dev work. Don't name the developer, and don't discuss how the work gets done
-  (tooling, process). That openness about being a one-person studio building with AI tooling
-  belongs on the site's other pages, not in posts.
+- Don't quote the developer's feedback directly. Tell it in first person ("I wanted...") in the
+  post's own voice, so the story keeps the why without publishing private messages.
+- Keep posts to the dev work. Don't name other people (testers are "our Android tester" and so on).
 - No AI-generated art in posts; every image is a real screenshot. The site covers more than one
   app, so don't claim "no AI art" for All Bark as a whole, only for the app a post is about when
   that's true.
 - Feedback from the developer, testers or users is told as what was good and what we built on.
   Never frame it as someone getting the rules (or anything else) wrong.
-- Only use facts that are in that week's notes. If something is unclear, ask in the notes repo
-  instead of guessing. Nothing marked "Not public yet" goes in a post, a file name, an alt text or a
-  commit message.
+- Only use facts that are in that week's notes (plus the commit trailers above for who built what).
+  If something is unclear, ask in the notes repo instead of guessing. Nothing marked "Not public
+  yet" goes in a post, a file name, an alt text or a commit message, except AI tooling and model
+  names, which the developer has cleared.
 - Don't name an unannounced app until its name is confirmed. Use a plain description ("our 5E
   character builder"). Cerberus is confirmed and can be named.
 - Don't use "Dungeons & Dragons", D&D logos, or Wizards of the Coast trademarks or art. "5E" and
