@@ -10,7 +10,7 @@ og_shot: /assets/devlog/2026-w41/haste-on-bo.png
 
 Week one was all about one hero and one turn. Week two, Cerberus learned to sit at a table. A DM
 can run the whole fight from their own device, damage goes where you aim it, and when someone casts
-Haste on you, it actually shows up on your sheet. Then we ran the first full playtest of the whole
+Haste on you, it actually shows up on your sheet. Then Fable ran the first full playtest of the whole
 app, and honestly, it had notes. 101 of them.
 
 That was 91 merged pull requests, almost all of them built with Opus, which is way too much for one
@@ -119,9 +119,9 @@ of my core rules for this app.
 
 ## The first full playtest
 
-After two weeks of moving fast, nobody had played the whole app end to end in one sitting. So we
+After two weeks of moving fast, nobody had played the whole app end to end in one sitting. So Fable
 did. We wrote up 36 scenarios covering the builder, level-up, the sheet, solo combat, table play,
-accessibility and sound, and ran every one from a wiped device.
+accessibility and sound, and Fable ran every one from a wiped device.
 
 It found 101 things. Zero blockers, thankfully: 10 major, 49 minor and 42 polish. I went through
 every one: agreed with 93, tweaked 8, tossed none. The fixes landed the next day in six focused
@@ -131,7 +131,7 @@ The big ones:
 
 - **Rules the sheet didn't enforce yet.** Dropping to 0 HP did nothing, and some class actions,
   like Reckless Attack, Flurry of Blows and some Channel Divinity options, just weren't there. Fable
-  picked those up: 0 HP now knocks you out and prompts your death save, and the missing actions are
+  fixed those too: 0 HP now knocks you out and prompts your death save, and the missing actions are
   in combat.
 - **The builder picked a class's key abilities from its saving throws** instead of its primary
   ability.
