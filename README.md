@@ -2,7 +2,8 @@
 
 The website for All Bark, a one-person indie studio. Served by GitHub Pages from `main`.
 
-- `/` home: the latest Bark Blog posts, then an Apps section linking each app's pages
+- `/` home: the latest Bark Blog posts, then an Apps section linking each app's page
+- `/cerberus/` and `/byte/` app pages: what each app does, with real screenshots
 - `/byte/*` and `/social/*` app policy and support pages (hand-written HTML, URLs fixed)
 - `/devlog/` The Bark Blog, our weekly devlog (Jekyll posts in `_posts/`)
 

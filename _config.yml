@@ -23,6 +23,14 @@ devlog:
   author: All Bark
   og_image: /assets/devlog/og-default.png
 
+# Where to follow along. Shown in every page's footer (rel="me" verifies the
+# Mastodon profile). Add YouTube and a Discord invite here once they have URLs.
+follow:
+  - name: Bluesky
+    url: https://bsky.app/profile/allbark.dev
+  - name: Mastodon
+    url: https://mastodon.social/@allbarkdev
+
 exclude:
   - README.md
   - CONTRIBUTING.md

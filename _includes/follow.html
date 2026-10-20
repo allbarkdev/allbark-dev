@@ -1,0 +1,7 @@
+{%- comment -%}
+Follow links from _config.yml's follow list, plus the feed. Used in every layout's footer.
+{%- endcomment -%}
+<p class="follow">Follow along:
+  <a href="{{ '/devlog/feed.xml' | relative_url }}">Feed</a>
+  {%- for f in site.follow %} <a href="{{ f.url }}" rel="me">{{ f.name }}</a>{% endfor %}
+</p>
