@@ -31,6 +31,11 @@ follow:
   - name: Mastodon
     url: https://mastodon.social/@allbarkdev
 
+# The homebrew tools are a prebuilt SvelteKit site (_tools/sync-homebrew.sh); its
+# assets live in homebrew/_app, which Jekyll would skip for the leading underscore.
+include:
+  - _app
+
 exclude:
   - README.md
   - CONTRIBUTING.md

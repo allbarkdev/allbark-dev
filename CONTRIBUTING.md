@@ -23,6 +23,10 @@ no theme to maintain.
   `python3 _tools/og_image.py <app>/index.html`, using the page's `og_brand` and `og_url` in place of
   the blog's brand line and footer. Keep public claims in step with what the app's notes allow
   (no release dates, prices or untested features).
+- `/homebrew/` is the homebrew pack checker and format guide, a prebuilt SvelteKit site from
+  `apps/homebrew` in allbarkdev/cerberus. Never edit it here: after it changes there, run
+  `_tools/sync-homebrew.sh <path to a cerberus checkout>` and commit the result.
+  `_config.yml` includes `_app` so Jekyll copies its assets.
 - The "Follow along" links in every footer come from `follow:` in `_config.yml`. Add a service
   there, not in a layout.
 - Every page follows the visitor's system light/dark setting and falls back to dark when there
