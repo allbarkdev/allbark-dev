@@ -1,0 +1,94 @@
+---
+layout: app
+title: Cerberus
+site_name: All Bark
+description: Cerberus is a guided character builder for fifth edition, plus a table-side sheet you tap to roll from. In development at All Bark.
+image: /assets/apps/cerberus/og.png
+image_alt: "All Bark: Cerberus, a guided character builder and table sheet for 5E, beside a screenshot of a gold level-up burst"
+og_shot: /assets/devlog/2026-w42/level-up.png
+og_brand: All Bark
+og_url: allbark.dev/cerberus
+---
+<section class="hero app-hero">
+  <p class="meta"><span class="status">In development</span><span class="dot" aria-hidden="true">·</span><span>For iPhone and Android</span></p>
+  <h1>Cerberus</h1>
+  <p class="dek">A guided character builder for fifth edition, plus a table-side sheet you tap to
+  roll from. Every step is visual and hard to get wrong, closer to a video game's character creator
+  than a stack of dropdowns.</p>
+  <p class="cta">It isn't in the stores yet. The <a href="{{ '/devlog/' | relative_url }}">build log</a>
+  follows it week by week, and the links at the bottom are the best way to hear when you can try it.</p>
+</section>
+
+<section class="app-section" aria-labelledby="build-title">
+  <h2 id="build-title">Build a hero without the rulebook open</h2>
+  <p>Species, class, background, ability scores, skills, equipment, then a look and a name. Each
+  step only asks for the choices that are actually open, and the rules check your picks as you go,
+  so you can't take a skill twice or wear armor you aren't trained in.</p>
+  {% include shot.html src="/assets/devlog/2026-w40/wizard-choices.png" alt="Builder step titled Skills & Feats. Skill choices are tappable chips with their bonus, Perception is picked, and Athletics and Intimidation are greyed out and marked Yours because the character already has them." caption="Skills you already have show up as *Yours* instead of letting you pick them twice." %}
+</section>
+
+<section class="app-section" aria-labelledby="sheet-title">
+  <h2 id="sheet-title">A sheet you play from</h2>
+  <p>Tap a skill or save to roll it, with advantage and disadvantage handled for you. In combat,
+  the wheel keeps your Action, Bonus Action and Reaction around your HP, and spells, conditions
+  and their timers live on the sheet instead of on scrap paper. When you level up, the new features
+  come first and the math second.</p>
+  <div class="shot-row">
+    {% include shot.html src="/assets/devlog/2026-w40/sheet-advantage.png" alt="A Fighter's table sheet with saving throws and skills listed. Athletics carries an ADV badge, and a roll card shows two d20s, 11 and 2, with the 11 kept for a total of 16." caption="Roll two, keep the 11, add 5." %}
+    {% include shot.html src="/assets/devlog/2026-w40/wheel-wedges.png" alt="The combat wheel on a Sorcerer's sheet: HP 72 of 72 in a green ring at the center, surrounded by three touching wedges for Action, Bonus Action and Reaction, with the round bar and spell slots below." caption="The combat wheel, HP in the middle." %}
+    {% include shot.html src="/assets/devlog/2026-w42/level-up.png" alt="A dark phone screen with a large gold 5 glowing in a burst of rays. Below it: 'Level up. Bram reached level 5. Fighter 5.' Four gold-edged headline cards read New feature Extra Attack, New feature Tactical Shift, Hit Points +8, and Proficiency Bonus +3, above a gold 'To your sheet' button" caption="Extra Attack first, math second." %}
+  </div>
+</section>
+
+<section class="app-section" aria-labelledby="dice-title">
+  <h2 id="dice-title">Real dice or ours</h2>
+  <p>Toss 3D dice into the shaker and watch the total add up, or roll your own dice at the table
+  and type in what you got. Either way, the sheet does the adding.</p>
+  {% include shot.html src="/assets/devlog/2026-w42/dice-shaker.png" alt="A dice tray on a dark phone screen holding five 3D dice: two percentile d10s showing 80 and 90, two d10s showing 7 and 8, and a d6 showing 4. The total reads 189 for 2d100 + 1d6. Below are buttons for d4 through d100, Reset, and a gold Toss dice button" caption="2d100 + 1d6 = 189. No idea what you'd roll that for." %}
+</section>
+
+<section class="app-section" aria-labelledby="dm-title">
+  <h2 id="dm-title">A screen for the DM</h2>
+  <p>The DM screen runs initiative and keeps a card for each monster, with its HP, conditions and
+  attacks ready to roll. It comes with the 329 monsters in the SRD.</p>
+  {% include shot.html src="/assets/devlog/2026-w41/dm-screen-tablet.png" alt="The DM screen on a tablet. On the left, the initiative order for round 1 with Goblin Warrior 2 (21), Goblin Boss (13) and Goblin Warrior (4), and a prepared fight called Goblin ambush, 3 monsters, Moderate for 4 at level 1. On the right, Goblin Warrior 2's card: AC 15, 10 of 10 HP, Scimitar and Shortbow attacks with Roll buttons, Nimble Escape and saving throws." caption="Initiative on the left, whoever's up on the right." wide=true %}
+</section>
+
+<section class="app-section" aria-labelledby="brew-title">
+  <h2 id="brew-title">Bring your own homebrew</h2>
+  <p>Subclasses, feats, magic items and more can come in as homebrew packs, plain files that
+  Cerberus labels as homebrew wherever they show up. Read <a href="{{ '/homebrew/format/' | relative_url }}">how a pack is put together</a>,
+  then <a href="{{ '/homebrew/' | relative_url }}">check yours</a> before you share it with your table.</p>
+</section>
+
+<section class="app-section" aria-labelledby="how-title">
+  <h2 id="how-title">How it's made</h2>
+  <ul class="facts">
+    <li><strong>Works offline, no account.</strong> Your heroes live on your device.</li>
+    <li><strong>SRD 5.2 rules and content</strong>, used under CC-BY-4.0. Compatible with fifth edition.</li>
+    <li><strong>Real screenshots only.</strong> No AI art in the app or on this page.</li>
+    <li><strong>Built by one developer</strong> with a lot of help from AI tooling, and written up every week.</li>
+  </ul>
+</section>
+
+{%- if site.posts.size > 0 %}
+<section class="app-section" aria-labelledby="log-title">
+  <div class="section-head">
+    <h2 id="log-title">From the build log</h2>
+    <p><a href="{{ '/devlog/' | relative_url }}">All posts</a></p>
+  </div>
+  <ol class="post-list compact">
+    {%- for post in site.posts limit: 3 %}
+    <li>
+      <a class="card" href="{{ post.url | relative_url }}">
+        <p class="meta">
+          {%- if post.week %}<span class="tag">{{ post.week | split: "-" | last }}</span>{% endif %}
+          <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %-d, %Y" }}</time>
+        </p>
+        <h3>{{ post.title | smartify }}</h3>
+      </a>
+    </li>
+    {%- endfor %}
+  </ol>
+</section>
+{%- endif %}

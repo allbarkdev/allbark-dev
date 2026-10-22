@@ -1,0 +1,275 @@
+{
+	"id": "allbark-kennel-armory",
+	"name": "Kennel Armory (homebrew example)",
+	"version": "1.0.0",
+	"formatVersion": 1,
+	"namespace": "kennel",
+	"publisher": "All Bark",
+	"license": {
+		"name": "CC-BY-4.0",
+		"url": "https://creativecommons.org/licenses/by/4.0/"
+	},
+	"dependencies": [
+		{
+			"id": "srd-5.2",
+			"version": "0.35.0"
+		}
+	],
+	"entries": {
+		"kennel:magic.fang-of-the-pack": {
+			"id": "kennel:magic.fang-of-the-pack",
+			"type": "item",
+			"name": "Fang of the Pack",
+			"description": "Uncommon weapon (longsword), requires attunement",
+			"effects": [],
+			"cost": 40000,
+			"magic": true,
+			"magicItem": {
+				"category": "weapon",
+				"subtype": "Longsword",
+				"rarity": "uncommon",
+				"attunement": true,
+				"text": [
+					"You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+					"The sword has 3 charges and regains 1d3 expended charges daily at dawn. When you hit a creature with it, you can expend 1 charge to let out a howl: the target takes an extra 1d6 Thunder damage."
+				],
+				"bases": ["srd:weapon.longsword"],
+				"bonus": {
+					"attack": 1
+				},
+				"charges": {
+					"max": 3,
+					"dawn": "1d3"
+				}
+			},
+			"uses": {
+				"name": "Howl",
+				"description": "When you hit a creature with the sword, expend 1 charge: the target takes an extra 1d6 Thunder damage.",
+				"spends": "charges",
+				"rolls": [
+					{
+						"kind": "damage",
+						"dice": "1d6",
+						"types": ["thunder"]
+					}
+				]
+			}
+		},
+		"kennel:magic.loyal-buckler": {
+			"id": "kennel:magic.loyal-buckler",
+			"type": "item",
+			"name": "Loyal Buckler",
+			"description": "Rare armor (shield), requires attunement",
+			"effects": [],
+			"cost": 400000,
+			"magic": true,
+			"magicItem": {
+				"category": "armor",
+				"subtype": "Shield",
+				"rarity": "rare",
+				"attunement": true,
+				"text": [
+					"While holding this Shield, you have a +1 bonus to Armor Class. This bonus is in addition to the Shield's normal bonus to AC.",
+					"If the Shield is more than 30 feet from you, it bounds back to your hand at the start of your next turn."
+				],
+				"bases": ["srd:armor.shield"],
+				"bonus": {
+					"ac": 1
+				}
+			}
+		},
+		"kennel:magic.kennelguard-mail": {
+			"id": "kennel:magic.kennelguard-mail",
+			"type": "item",
+			"name": "Kennelguard Mail, +1, +2, or +3",
+			"description": "Armor (any medium or heavy), rarity varies",
+			"effects": [],
+			"magic": true,
+			"magicItem": {
+				"category": "armor",
+				"subtype": "Any Medium or Heavy",
+				"rarity": "varies",
+				"rarityText": "Uncommon (+1), Rare (+2), or Very Rare (+3)",
+				"attunement": false,
+				"text": [
+					"Stitched with a guard dog's patience, this armor gives a bonus to Armor Class while you wear it. The bonus is determined by its rarity."
+				],
+				"bases": [
+					"srd:armor.chain-shirt",
+					"srd:armor.breastplate",
+					"srd:armor.chain-mail",
+					"srd:armor.plate-armor"
+				],
+				"tiers": [
+					{
+						"bonus": 1,
+						"rarity": "uncommon",
+						"cost": 40000
+					},
+					{
+						"bonus": 2,
+						"rarity": "rare",
+						"cost": 400000
+					},
+					{
+						"bonus": 3,
+						"rarity": "very-rare",
+						"cost": 4000000
+					}
+				]
+			}
+		},
+		"kennel:magic.collar-of-the-good-dog": {
+			"id": "kennel:magic.collar-of-the-good-dog",
+			"type": "item",
+			"name": "Collar of the Good Dog",
+			"description": "Common wondrous item, requires attunement",
+			"effects": [],
+			"cost": 10000,
+			"weight": 0.5,
+			"magic": true,
+			"magicItem": {
+				"category": "wondrous-item",
+				"rarity": "common",
+				"attunement": true,
+				"text": [
+					"While wearing this studded leather collar, you have a +1 bonus to ability checks and saving throws. Tough outside, good inside."
+				],
+				"bonus": {
+					"checks": 1,
+					"saves": 1
+				}
+			}
+		},
+		"kennel:magic.thick-coat-bracers": {
+			"id": "kennel:magic.thick-coat-bracers",
+			"type": "item",
+			"name": "Thick-Coat Bracers",
+			"description": "Rare wondrous item, requires attunement",
+			"effects": [],
+			"cost": 400000,
+			"weight": 1,
+			"magic": true,
+			"magicItem": {
+				"category": "wondrous-item",
+				"rarity": "rare",
+				"attunement": true,
+				"text": [
+					"While wearing these shaggy bracers, you gain a +2 bonus to Armor Class if you are wearing no armor and using no Shield."
+				],
+				"bonus": {
+					"acUnarmored": 2
+				}
+			}
+		},
+		"kennel:magic.howling-pendant": {
+			"id": "kennel:magic.howling-pendant",
+			"type": "item",
+			"name": "Howling Pendant",
+			"description": "Rare wondrous item, requires attunement by a Bard, Druid, or Ranger",
+			"effects": [],
+			"cost": 400000,
+			"magic": true,
+			"magicItem": {
+				"category": "wondrous-item",
+				"rarity": "rare",
+				"attunement": "a Bard, Druid, or Ranger",
+				"text": [
+					"Your Wisdom score is 17 while you wear this wolf's-tooth pendant. It has no effect on you if your Wisdom is already 17 or higher.",
+					"The pendant has 7 charges and regains 1d6 + 1 expended charges daily at dawn. As a Magic action, you can expend 1 charge to howl, and every ally within 30 feet of you who can hear you gains 1d4 Temporary Hit Points."
+				],
+				"bonus": {
+					"sets": {
+						"wis": 17
+					}
+				},
+				"charges": {
+					"max": 7,
+					"dawn": "1d6+1"
+				}
+			},
+			"uses": {
+				"name": "Howl",
+				"description": "Expend 1 charge to howl: every ally within 30 feet of you who can hear you gains 1d4 Temporary Hit Points.",
+				"spends": "charges",
+				"rolls": [
+					{
+						"kind": "temp-hp",
+						"dice": "1d4"
+					}
+				],
+				"healOthers": true
+			},
+			"turn": "action"
+		},
+		"kennel:magic.pack-whistle": {
+			"id": "kennel:magic.pack-whistle",
+			"type": "item",
+			"name": "Pack Whistle",
+			"description": "Uncommon wondrous item",
+			"effects": [
+				{
+					"kind": "grant",
+					"target": "advantage",
+					"value": "skill.animal-handling"
+				},
+				{
+					"kind": "grant",
+					"target": "spell",
+					"value": "srd:spell.animal-friendship",
+					"free": {
+						"charges": 1
+					}
+				}
+			],
+			"cost": 40000,
+			"weight": 0.1,
+			"magic": true,
+			"magicItem": {
+				"category": "wondrous-item",
+				"rarity": "uncommon",
+				"attunement": false,
+				"text": [
+					"While this bone whistle hangs around your neck, you have Advantage on Wisdom (Animal Handling) checks.",
+					"The whistle has 3 charges and regains 1d3 expended charges daily at dawn. You can expend 1 charge to cast Animal Friendship (save DC 13) from it."
+				],
+				"charges": {
+					"max": 3,
+					"dawn": "1d3"
+				},
+				"spellDc": 13
+			}
+		},
+		"kennel:magic.den-mothers-mantle": {
+			"id": "kennel:magic.den-mothers-mantle",
+			"type": "item",
+			"name": "Den Mother's Mantle",
+			"description": "Rare wondrous item, requires attunement",
+			"effects": [
+				{
+					"kind": "grant",
+					"target": "resistance",
+					"value": "cold"
+				},
+				{
+					"kind": "grant",
+					"target": "darkvision",
+					"value": "60"
+				}
+			],
+			"cost": 400000,
+			"weight": 2,
+			"magic": true,
+			"magicItem": {
+				"category": "wondrous-item",
+				"rarity": "rare",
+				"attunement": true,
+				"text": [
+					"While you wear this heavy fur mantle, you have Resistance to Cold damage and Darkvision out to 60 feet.",
+					"The mantle smells faintly of woodsmoke and wet dog. The GM decides whether animals trust you more for it."
+				],
+				"table": "Whether animals trust you more for it is the GM’s call."
+			}
+		}
+	}
+}

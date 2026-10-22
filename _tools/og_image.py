@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render a 1200x630 Open Graph card for a Bark Blog post.
+"""Render a 1200x630 Open Graph card for a Bark Blog post or an app page.
 
 GitHub Pages can't generate images, so we render them when a post is drafted
 and commit the PNG next to the post's screenshots.
@@ -9,6 +9,8 @@ and commit the PNG next to the post's screenshots.
 
 Reads the post's front matter: title, week, date, image (where to write the
 PNG) and og_shot (optional; a real screenshot from the post to show on the card).
+App pages (cerberus/index.html) also set og_brand and og_url, which replace the
+"THE BARK BLOG" line and the allbark.dev/devlog footer.
 Needs only Pillow (pip install pillow). Fonts are Inter (OFL), bundled in _tools/fonts.
 """
 import argparse
@@ -108,7 +110,7 @@ def rounded(img, radius):
     return out
 
 
-def render(title, week=None, when=None, shot=None, out=None):
+def render(title, week=None, when=None, shot=None, out=None, brand="The Bark Blog", url="allbark.dev/devlog"):
     title = re.sub(r"(\w)'", "\\1\u2019", title)  # typographic apostrophes, like the page
     img = Image.new("RGBA", (W, H), BG + (255,))
     d = ImageDraw.Draw(img)
@@ -134,7 +136,7 @@ def render(title, week=None, when=None, shot=None, out=None):
 
     # Brand line
     img.alpha_composite(paw(44, ACCENT + (255,)), (PAD, PAD - 4))
-    d.text((PAD + 56, PAD + 18), "THE BARK BLOG", font=font("Inter-Medium.otf", 26), fill=ACCENT, anchor="lm")
+    d.text((PAD + 56, PAD + 18), brand.upper(), font=font("Inter-Medium.otf", 26), fill=ACCENT, anchor="lm")
 
     # Title
     fnt, lines, size = fit_title(d, title, text_right - PAD)
@@ -155,7 +157,7 @@ def render(title, week=None, when=None, shot=None, out=None):
         d.ellipse([x + 14, fy - 5, x + 24, fy + 5], fill=BG)
         d.text((x + 34, fy), label, font=small, fill=CARD, anchor="lm")
         x += tw + 72
-    footer = "allbark.dev/devlog"
+    footer = url
     if when:
         footer = f"{when:%B} {when.day}, {when.year}  ·  {footer}"
     d.text((x, fy), footer, font=small, fill=MUTED, anchor="lm")
@@ -167,7 +169,7 @@ def render(title, week=None, when=None, shot=None, out=None):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("post", nargs="?", help="path to a _posts/*.md file")
+    ap.add_argument("post", nargs="?", help="path to a _posts/*.md file or an app page")
     ap.add_argument("--default", action="store_true", help="render the devlog's default card")
     args = ap.parse_args()
 
@@ -187,7 +189,8 @@ def main():
     if m:
         when = date(*map(int, m.groups()))
     shot = ROOT / fm["og_shot"].lstrip("/") if fm.get("og_shot") else None
-    render(fm["title"], fm.get("week"), when, shot, ROOT / fm["image"].lstrip("/"))
+    render(fm["title"], fm.get("week"), when, shot, ROOT / fm["image"].lstrip("/"),
+           fm.get("og_brand") or "The Bark Blog", fm.get("og_url") or "allbark.dev/devlog")
 
 
 if __name__ == "__main__":

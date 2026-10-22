@@ -1,0 +1,2286 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"$ref": "#/definitions/Pack",
+	"definitions": {
+		"Pack": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "Stable pack ID that characters record in `packIds` (`srd-5.2`)."
+				},
+				"name": {
+					"type": "string"
+				},
+				"version": {
+					"type": "string",
+					"description": "Semver of the pack's content (`1.2.0`)."
+				},
+				"formatVersion": {
+					"type": "number",
+					"description": "Pack format version; must equal `PACK_FORMAT_VERSION`."
+				},
+				"namespace": {
+					"type": "string",
+					"description": "Prefix for every entry and choice ID in the pack: lowercase letters, digits and dashes.",
+					"pattern": "^[a-z][a-z0-9-]*$"
+				},
+				"publisher": {
+					"type": "string",
+					"description": "Who made the pack (a publisher, or a player's name for homebrew)."
+				},
+				"license": {
+					"type": "object",
+					"properties": {
+						"name": {
+							"type": "string"
+						},
+						"url": {
+							"type": "string"
+						}
+					},
+					"required": [
+						"name"
+					],
+					"additionalProperties": false
+				},
+				"attribution": {
+					"type": "string",
+					"description": "Attribution text the license requires, shown on the About/Legal screen."
+				},
+				"dependencies": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"id": {
+								"type": "string"
+							},
+							"version": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"id"
+						],
+						"additionalProperties": false
+					},
+					"description": "Packs whose entries this pack references, by pack ID."
+				},
+				"entries": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/PackEntry"
+					},
+					"description": "Content entries (classes, species, backgrounds, …) keyed by ID."
+				},
+				"extensions": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/PackExtension"
+					},
+					"description": "Options this pack adds to choices in its dependencies (a new subclass for a class)."
+				}
+			},
+			"required": [
+				"id",
+				"name",
+				"version",
+				"formatVersion",
+				"namespace",
+				"publisher",
+				"license",
+				"entries"
+			],
+			"additionalProperties": false,
+			"description": "A pack's manifest plus its content. Every entry and choice ID in a pack starts with the pack's namespace (`srd:class.fighter`), so packs from different sources can't collide. Entries may reference other packs' entries only through declared dependencies."
+		},
+		"PackEntry": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"type": {
+					"$ref": "#/definitions/PackEntryType"
+				},
+				"name": {
+					"type": "string"
+				},
+				"description": {
+					"type": "string",
+					"description": "Short plain-language summary the wizard and sheet show."
+				},
+				"effects": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Effect"
+					},
+					"description": "What the entry does, applied in order. An item's effects apply while the item works: carried (worn for armor and a Shield), and attuned when it needs attunement."
+				},
+				"armor": {
+					"$ref": "#/definitions/ArmorStats",
+					"description": "Items only: armor stats, if this is armor or a shield."
+				},
+				"weapon": {
+					"$ref": "#/definitions/WeaponStats",
+					"description": "Items only: weapon stats, if this is a weapon."
+				},
+				"tool": {
+					"$ref": "#/definitions/ToolStats",
+					"description": "Items only: tool stats, if this is a tool."
+				},
+				"cost": {
+					"type": "number",
+					"description": "Items only: the price in Copper Pieces (1 GP = 100), for buying in the store. Items without a price (a Spellbook, a generic \"Musical Instrument\") can't be bought or sold."
+				},
+				"bundle": {
+					"type": "number",
+					"description": "Items only: how many one purchase brings (20 Arrows), when more than 1."
+				},
+				"weight": {
+					"type": "number",
+					"description": "Items only: weight in pounds (of the whole bundle)."
+				},
+				"container": {
+					"type": "object",
+					"properties": {
+						"capacity": {
+							"type": [
+								"number",
+								"null"
+							]
+						},
+						"weightless": {
+							"type": "boolean"
+						},
+						"holds": {
+							"type": "string"
+						}
+					},
+					"required": [
+						"capacity"
+					],
+					"additionalProperties": false,
+					"description": "The item holds other items (a Backpack, a Bag of Holding): `capacity` in pounds, or null for one that counts what it holds some other way (`holds` says how: an Efficient Quiver's compartments). `weightless`: what's inside weighs nothing to the carrier (an extradimensional space). Items are put in it with a `stow` decision."
+				},
+				"service": {
+					"type": "boolean",
+					"description": "Items only: a service or something used on the spot (a night at an inn, a hireling's day, a mug of ale). Buying it spends coins and adds nothing to the inventory."
+				},
+				"magic": {
+					"type": "boolean",
+					"description": "Items only: a magic item, which the SRD leaves to the GM to put up for sale."
+				},
+				"magicItem": {
+					"$ref": "#/definitions/MagicItemStats",
+					"description": "Magic items only: category, rarity, attunement and the full description."
+				},
+				"contents": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"id": {
+								"type": "string"
+							},
+							"quantity": {
+								"type": "number"
+							},
+							"picked": {
+								"type": "object",
+								"properties": {
+									"choice": {
+										"type": "string"
+									},
+									"items": {
+										"type": "object",
+										"additionalProperties": {
+											"type": "string"
+										}
+									}
+								},
+								"required": [
+									"choice",
+									"items"
+								],
+								"additionalProperties": false,
+								"description": "The item is whichever kind the hero picked in a choice (the Soldier's kit holds the gaming set they're proficient with): each option of that choice, by value, to the item entry ID it brings. `id` stands until the choice is answered."
+							}
+						},
+						"required": [
+							"id"
+						],
+						"additionalProperties": false
+					},
+					"description": "Packages only: what the package contains."
+				},
+				"gp": {
+					"type": "number",
+					"description": "Packages only: gold pieces included."
+				},
+				"primaryAbility": {
+					"type": "object",
+					"properties": {
+						"abilities": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/Ability"
+							}
+						},
+						"all": {
+							"type": "boolean"
+						}
+					},
+					"required": [
+						"abilities"
+					],
+					"additionalProperties": false,
+					"description": "Classes only: the ability (or abilities) a character needs at 13 or higher to multiclass into or out of this class. With `all`, every listed ability; otherwise any one of them."
+				},
+				"spellcasting": {
+					"$ref": "#/definitions/SpellcastingStats",
+					"description": "Classes only: how the class casts spells, if it does."
+				},
+				"category": {
+					"type": "string",
+					"description": "Feats only: the category the SRD lists it under (`General`, `Epic Boon`)."
+				},
+				"prerequisite": {
+					"$ref": "#/definitions/Prerequisite",
+					"description": "What a character needs to take this entry through a choice."
+				},
+				"repeatable": {
+					"type": "boolean",
+					"description": "Can be taken more than once (the Ability Score Improvement feat). Each time it is taken through a choice, its own choices get their own IDs: `<that choice>/<its choice>`."
+				},
+				"spell": {
+					"$ref": "#/definitions/SpellStats",
+					"description": "Spells only."
+				},
+				"uses": {
+					"anyOf": [
+						{
+							"$ref": "#/definitions/FeatureUses"
+						},
+						{
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/FeatureUses"
+							}
+						}
+					],
+					"description": "Features, feats and items: limited uses per rest, and what using one rolls. An item's uses count while the item works (carried, worn for armor, attuned if it needs it) and can spend its charges (`spends: 'charges'`). An item with several activations (a Rod of Lordly Might's buttons) lists them; each is its own `FeatureUse`, counted apart."
+				},
+				"turn": {
+					"$ref": "#/definitions/FeatureTurn",
+					"description": "Features and feats only: what using it takes in combat, so combat mode can offer it."
+				},
+				"casts": {
+					"type": "boolean",
+					"description": "Features only: using it casts a spell without Material components (Wild Companion's Find Familiar), so it's out of reach wherever spells are (a Wild Shape form without Beast Spells)."
+				},
+				"spellBoost": {
+					"$ref": "#/definitions/SpellBoost",
+					"description": "Features and feats only: an ability modifier added to some spells' damage rolls."
+				},
+				"creature": {
+					"$ref": "#/definitions/CreatureStats",
+					"description": "Creatures only: the stat block (a Beast form for Wild Shape)."
+				}
+			},
+			"required": [
+				"id",
+				"type",
+				"name",
+				"effects"
+			],
+			"additionalProperties": false
+		},
+		"PackEntryType": {
+			"type": "string",
+			"enum": [
+				"class",
+				"subclass",
+				"species",
+				"background",
+				"feature",
+				"feat",
+				"spell",
+				"item",
+				"package",
+				"creature"
+			]
+		},
+		"Effect": {
+			"anyOf": [
+				{
+					"type": "object",
+					"properties": {
+						"kind": {
+							"type": "string",
+							"const": "grant"
+						},
+						"target": {
+							"$ref": "#/definitions/GrantTarget"
+						},
+						"value": {
+							"type": "string"
+						},
+						"level": {
+							"type": "number"
+						},
+						"when": {
+							"$ref": "#/definitions/EffectWhen"
+						},
+						"max": {
+							"type": "number",
+							"description": "`ability-score` only: the highest the score can go (default 20)."
+						},
+						"free": {
+							"$ref": "#/definitions/FreeCasts",
+							"description": "`spell` only: the spell can also be cast without a slot."
+						}
+					},
+					"required": [
+						"kind",
+						"target",
+						"value"
+					],
+					"additionalProperties": false
+				},
+				{
+					"type": "object",
+					"properties": {
+						"kind": {
+							"type": "string",
+							"const": "modify"
+						},
+						"target": {
+							"$ref": "#/definitions/ModifyTarget"
+						},
+						"amount": {
+							"anyOf": [
+								{
+									"type": "number"
+								},
+								{
+									"type": "string",
+									"const": "proficiency"
+								},
+								{
+									"type": "string",
+									"const": "level"
+								}
+							],
+							"description": "A flat number, `'proficiency'` to add the proficiency bonus, or `'level'` to add the level the effect applies at: the character level for a species (Dwarven Toughness), the class level for a class feature."
+						},
+						"level": {
+							"type": "number"
+						},
+						"when": {
+							"$ref": "#/definitions/EffectWhen"
+						}
+					},
+					"required": [
+						"kind",
+						"target",
+						"amount"
+					],
+					"additionalProperties": false
+				},
+				{
+					"type": "object",
+					"properties": {
+						"kind": {
+							"type": "string",
+							"const": "choice"
+						},
+						"id": {
+							"type": "string",
+							"description": "Stable, globally unique ID; decisions refer to it."
+						},
+						"label": {
+							"type": "string",
+							"description": "What the player is picking, shown by the wizard (e.g. \"Skill proficiencies\")."
+						},
+						"choose": {
+							"type": "number"
+						},
+						"repeat": {
+							"type": "number",
+							"description": "How many times the same option may be picked (default 1). Background ability increases use `choose: 3, repeat: 2` over three abilities: +2/+1 or +1/+1/+1."
+						},
+						"target": {
+							"$ref": "#/definitions/GrantTarget",
+							"description": "Each pick is granted to `target`, like a `grant` effect."
+						},
+						"from": {
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						},
+						"level": {
+							"type": "number"
+						},
+						"when": {
+							"$ref": "#/definitions/EffectWhen"
+						},
+						"max": {
+							"type": "number",
+							"description": "`ability-score` only: the highest a score can go (default 20)."
+						},
+						"fromSpellbook": {
+							"type": "boolean",
+							"description": "`spell` only: offer just the options already in the spellbook (Spell Mastery). Asked once every other grant is in, so the whole book is known."
+						},
+						"free": {
+							"$ref": "#/definitions/FreeCasts",
+							"description": "`spell` only: each pick can also be cast without a slot."
+						},
+						"swap": {
+							"type": "string",
+							"const": "level",
+							"description": "`level`: whenever the character gains a level, one pick can be replaced with another option of the same choice (Magic Initiate's Spell Change). Choices from the same entry share that one replacement."
+						}
+					},
+					"required": [
+						"kind",
+						"id",
+						"label",
+						"choose",
+						"target",
+						"from"
+					],
+					"additionalProperties": false
+				}
+			]
+		},
+		"GrantTarget": {
+			"type": "string",
+			"enum": [
+				"proficiency.save",
+				"proficiency.skill",
+				"proficiency.armor",
+				"proficiency.weapon",
+				"hit-die",
+				"feature",
+				"feat",
+				"weapon-mastery",
+				"speed",
+				"size",
+				"ability-score",
+				"proficiency.tool",
+				"subclass",
+				"advantage",
+				"equipment",
+				"rule",
+				"proficiency",
+				"spell",
+				"spellcasting-ability",
+				"darkvision",
+				"resistance",
+				"expertise",
+				"unarmored-defense",
+				"unarmored-defense.no-shield",
+				"spellbook",
+				"skill-bonus",
+				"language",
+				"wild-shape-form",
+				"metamagic",
+				"immunity",
+				"condition-immunity",
+				"speed.climb",
+				"speed.swim",
+				"damage-reduction"
+			]
+		},
+		"EffectWhen": {
+			"type": "string",
+			"enum": [
+				"starting",
+				"multiclass"
+			],
+			"description": "When a class's effect applies, for traits that differ between a character's first class and a class they multiclass into later: `starting` only for the first class (saving throws, skills, starting equipment), `multiclass` only for a class added later."
+		},
+		"FreeCasts": {
+			"type": "object",
+			"properties": {
+				"uses": {
+					"anyOf": [
+						{
+							"type": "number"
+						},
+						{
+							"type": "string",
+							"const": "proficiency"
+						},
+						{
+							"type": "string",
+							"const": "at-will"
+						}
+					],
+					"description": "Casts per rest: a number, `proficiency` (the Proficiency Bonus) or `at-will`. Default 1."
+				},
+				"rest": {
+					"type": "string",
+					"enum": [
+						"short",
+						"long"
+					],
+					"description": "The rest that brings them back. Default `long`."
+				},
+				"pool": {
+					"type": "string",
+					"description": "An entry ID whose casts every spell with the same `pool` shares, and whose name is shown as the source: Natural Recovery's one free Circle Spell, whichever it is."
+				},
+				"charges": {
+					"type": "number",
+					"description": "Casts spend this many of the item's charges instead of uses per rest (Wand of Fireballs' 1 charge). Only on an item with `magicItem.charges`."
+				},
+				"level": {
+					"type": "number",
+					"description": "Cast at this level rather than the spell's own (a Staff of Power's level 5 Fireball)."
+				},
+				"upcast": {
+					"type": "object",
+					"properties": {
+						"charges": {
+							"type": "number"
+						},
+						"max": {
+							"type": "number"
+						}
+					},
+					"required": [
+						"charges",
+						"max"
+					],
+					"additionalProperties": false,
+					"description": "Each level above the spell's own costs this many more charges, spending at most `max` on one cast (a Wand of Fireballs: 1 more per level, no more than 3). Only with `charges`."
+				},
+				"scroll": {
+					"type": "boolean",
+					"const": true,
+					"description": "The spell is read from a Spell Scroll (SRD, \"Spell Scroll\"): the hero can cast it only when the spell is on one of their classes' spell lists, a spell above the level they can cast asks for a check with their spellcasting ability (DC 10 + the spell's level, and a failure wipes the scroll), and the cast uses the item up. Only on an item, without `charges`."
+				}
+			},
+			"additionalProperties": false,
+			"description": "Casts of a spell without a spell slot (an Elven Lineage's spells, Magic Initiate, Mystic Arcanum, Armor of Shadows), on a `spell` grant or choice."
+		},
+		"ModifyTarget": {
+			"type": "string",
+			"enum": [
+				"hp.max",
+				"ac",
+				"ac.armored",
+				"initiative",
+				"speed",
+				"crit-threshold",
+				"attack.ranged",
+				"attacks",
+				"sneak-attack",
+				"speed.no-heavy-armor",
+				"rage.uses",
+				"rage.damage",
+				"martial-arts",
+				"speed.unarmored",
+				"spell-dc",
+				"spell-attack",
+				"focus.points",
+				"lay-on-hands",
+				"channel-divinity",
+				"favored-enemy",
+				"arcane-recovery",
+				"sorcery-points",
+				"innate-sorcery",
+				"bardic-inspiration",
+				"wild-shape",
+				"wild-shape.forms",
+				"wild-shape.max-cr",
+				"wild-shape.temp-hp",
+				"natural-recovery"
+			]
+		},
+		"ArmorStats": {
+			"type": "object",
+			"properties": {
+				"type": {
+					"$ref": "#/definitions/ArmorType"
+				},
+				"ac": {
+					"type": "number",
+					"description": "Base AC for body armor, or the bonus for a shield."
+				},
+				"strength": {
+					"type": "number",
+					"description": "Strength score needed to avoid a 10 ft speed penalty (heavy armor)."
+				},
+				"stealthDisadvantage": {
+					"type": "boolean",
+					"description": "Disadvantage on Dexterity (Stealth) checks while worn."
+				}
+			},
+			"required": [
+				"type",
+				"ac"
+			],
+			"additionalProperties": false,
+			"description": "Armor stats. Body armor sets base AC; a shield adds `ac` on top."
+		},
+		"ArmorType": {
+			"type": "string",
+			"enum": [
+				"light",
+				"medium",
+				"heavy",
+				"shield"
+			]
+		},
+		"WeaponStats": {
+			"type": "object",
+			"properties": {
+				"category": {
+					"type": "string",
+					"enum": [
+						"simple",
+						"martial"
+					]
+				},
+				"range": {
+					"type": "string",
+					"enum": [
+						"melee",
+						"ranged"
+					]
+				},
+				"damage": {
+					"type": "string",
+					"description": "Damage dice (`1d8`), or a flat number (`1`) for weapons like the Blowgun."
+				},
+				"damageType": {
+					"$ref": "#/definitions/DamageType"
+				},
+				"properties": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/WeaponProperty"
+					}
+				},
+				"versatile": {
+					"type": "string",
+					"description": "Damage dice when wielded with two hands (Versatile)."
+				},
+				"distance": {
+					"type": "array",
+					"items": {
+						"type": "number"
+					},
+					"minItems": 2,
+					"maxItems": 2,
+					"description": "Normal and long range in feet (Thrown or Ammunition)."
+				},
+				"mastery": {
+					"$ref": "#/definitions/WeaponMastery"
+				},
+				"ammunition": {
+					"type": "string",
+					"description": "Item ID of the ammunition it fires, for weapons with the Ammunition property."
+				}
+			},
+			"required": [
+				"category",
+				"range",
+				"damage",
+				"damageType",
+				"properties",
+				"mastery"
+			],
+			"additionalProperties": false,
+			"description": "Weapon stats."
+		},
+		"DamageType": {
+			"type": "string",
+			"enum": [
+				"bludgeoning",
+				"piercing",
+				"slashing"
+			]
+		},
+		"WeaponProperty": {
+			"type": "string",
+			"enum": [
+				"ammunition",
+				"finesse",
+				"heavy",
+				"light",
+				"loading",
+				"reach",
+				"thrown",
+				"two-handed",
+				"versatile"
+			]
+		},
+		"WeaponMastery": {
+			"type": "string",
+			"enum": [
+				"cleave",
+				"graze",
+				"nick",
+				"push",
+				"sap",
+				"slow",
+				"topple",
+				"vex"
+			]
+		},
+		"ToolStats": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string",
+					"description": "The tool proficiency this item uses (`thieves-tools`)."
+				},
+				"ability": {
+					"$ref": "#/definitions/Ability"
+				},
+				"utilize": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"use": {
+								"type": "string"
+							},
+							"dc": {
+								"type": "number"
+							}
+						},
+						"required": [
+							"use",
+							"dc"
+						],
+						"additionalProperties": false
+					}
+				},
+				"skill": {
+					"$ref": "#/definitions/Skill",
+					"description": "The skill a check with this tool usually pairs with. Proficiency in both the tool and the skill gives Advantage on the check; the GM has the final say on which skill applies."
+				}
+			},
+			"required": [
+				"id",
+				"ability",
+				"utilize"
+			],
+			"additionalProperties": false,
+			"description": "Tool stats (SRD 5.2 Tools): the proficiency the item answers to (`proficiency.tool` grants use the same plain ID), the ability a check with it uses, and what the Utilize action does with it, each with its DC."
+		},
+		"Ability": {
+			"type": "string",
+			"enum": [
+				"str",
+				"dex",
+				"con",
+				"int",
+				"wis",
+				"cha"
+			]
+		},
+		"Skill": {
+			"type": "string",
+			"enum": [
+				"acrobatics",
+				"animal-handling",
+				"arcana",
+				"athletics",
+				"deception",
+				"history",
+				"insight",
+				"intimidation",
+				"investigation",
+				"medicine",
+				"nature",
+				"perception",
+				"performance",
+				"persuasion",
+				"religion",
+				"sleight-of-hand",
+				"stealth",
+				"survival"
+			]
+		},
+		"MagicItemStats": {
+			"type": "object",
+			"properties": {
+				"category": {
+					"$ref": "#/definitions/MagicItemCategory"
+				},
+				"subtype": {
+					"type": "string",
+					"description": "What the item is made from, as printed: `Any Medium or Heavy`, `Longsword`."
+				},
+				"rarity": {
+					"$ref": "#/definitions/MagicRarity"
+				},
+				"rarityText": {
+					"type": "string",
+					"description": "The printed rarities when they vary: `Uncommon (+1), Rare (+2), or Very Rare (+3)`."
+				},
+				"attunement": {
+					"type": [
+						"boolean",
+						"string"
+					],
+					"description": "Needs attunement: `true`, or who can attune as printed (`a Paladin`, `a Spellcaster`)."
+				},
+				"text": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"description": "The description, one paragraph per string."
+				},
+				"bases": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"description": "Items it can be made from (a weapon, armor or Shield ID). With one, the item is always that one; with more, the inventory ID names the one it is (`magicItemId`)."
+				},
+				"tiers": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/MagicTier"
+					},
+					"description": "The versions a `+1, +2, or +3` item comes in; the inventory ID names one."
+				},
+				"kinds": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/MagicKind"
+					},
+					"description": "The kinds an item comes in (a Belt of Giant Strength's giants); the inventory ID names one."
+				},
+				"bonus": {
+					"$ref": "#/definitions/MagicBonus",
+					"description": "What the item does to the sheet while it works (attuned, if it needs attunement)."
+				},
+				"charges": {
+					"$ref": "#/definitions/MagicCharges",
+					"description": "Charges it holds, and what comes back at dawn."
+				},
+				"riders": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/ItemRider"
+					},
+					"description": "A weapon's extra damage on a hit, while it works (attuned, if it needs attunement)."
+				},
+				"spellDc": {
+					"type": "number",
+					"description": "Spells cast from the item use this save DC as printed (Wand of Fireballs' 15), and an attack bonus of DC − 8. Without it they use the user's spellcasting ability (the best one with several), or +0 and the Proficiency Bonus with none (SRD, \"Spells Cast from Items\")."
+				},
+				"table": {
+					"type": "string",
+					"description": "What the description holds that the sheet doesn't apply yet, in a sentence the sheet shows the player (a wand's destruction roll, a bead thrown by hand): that part is the table's to run."
+				},
+				"base": {
+					"type": "string",
+					"description": "On a resolved item (`resolveItem`): the item it's made from, the tier and the kind."
+				},
+				"tier": {
+					"type": "number"
+				},
+				"kind": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"category",
+				"rarity",
+				"attunement",
+				"text"
+			],
+			"additionalProperties": false,
+			"description": "A magic item's category line and description, as the SRD prints them."
+		},
+		"MagicItemCategory": {
+			"type": "string",
+			"enum": [
+				"armor",
+				"potion",
+				"ring",
+				"rod",
+				"scroll",
+				"staff",
+				"wand",
+				"weapon",
+				"wondrous-item"
+			]
+		},
+		"MagicRarity": {
+			"type": "string",
+			"enum": [
+				"common",
+				"uncommon",
+				"rare",
+				"very-rare",
+				"legendary",
+				"artifact",
+				"varies"
+			]
+		},
+		"MagicTier": {
+			"type": "object",
+			"properties": {
+				"bonus": {
+					"type": "number"
+				},
+				"rarity": {
+					"$ref": "#/definitions/MagicRarity"
+				},
+				"cost": {
+					"type": "number",
+					"description": "Value in Copper Pieces, before the item it's made from."
+				}
+			},
+			"required": [
+				"bonus",
+				"rarity"
+			],
+			"additionalProperties": false,
+			"description": "One version of a `+1, +2, or +3` item."
+		},
+		"MagicKind": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"name": {
+					"type": "string"
+				},
+				"rarity": {
+					"$ref": "#/definitions/MagicRarity"
+				},
+				"cost": {
+					"type": "number"
+				},
+				"bonus": {
+					"$ref": "#/definitions/MagicBonus"
+				},
+				"effects": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Effect"
+					},
+					"description": "Effects this kind adds to the item's own (a Ring of Resistance's damage type)."
+				},
+				"uses": {
+					"anyOf": [
+						{
+							"$ref": "#/definitions/FeatureUses"
+						},
+						{
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/FeatureUses"
+							}
+						}
+					],
+					"description": "Uses this kind has in place of the item's own (a Potion of Giant Strength's giant)."
+				},
+				"spellDc": {
+					"type": "number",
+					"description": "The save DC its spells are cast at, in place of the item's own (a Spell Scroll's level)."
+				}
+			},
+			"required": [
+				"id",
+				"name",
+				"rarity"
+			],
+			"additionalProperties": false,
+			"description": "One kind of an item that comes in several (`Hill Giant`)."
+		},
+		"MagicBonus": {
+			"type": "object",
+			"properties": {
+				"attack": {
+					"type": "number",
+					"description": "Bonus to attack and damage rolls made with this weapon."
+				},
+				"ac": {
+					"type": "number",
+					"description": "Bonus to Armor Class."
+				},
+				"acUnarmored": {
+					"type": "number",
+					"description": "Bonus to Armor Class while wearing no armor and using no Shield (Bracers of Defense)."
+				},
+				"saves": {
+					"type": "number",
+					"description": "Bonus to every saving throw."
+				},
+				"checks": {
+					"type": "number",
+					"description": "Bonus to every ability check (skills and Initiative included)."
+				},
+				"spellAttack": {
+					"type": "number",
+					"description": "Bonus to the character's own spell attack rolls (a Wand of the War Mage, a Talisman)."
+				},
+				"spellDc": {
+					"type": "number",
+					"description": "Bonus to the character's own spell save DC (Robe of the Archmagi)."
+				},
+				"sets": {
+					"type": "object",
+					"properties": {
+						"str": {
+							"type": "number"
+						},
+						"dex": {
+							"type": "number"
+						},
+						"con": {
+							"type": "number"
+						},
+						"int": {
+							"type": "number"
+						},
+						"wis": {
+							"type": "number"
+						},
+						"cha": {
+							"type": "number"
+						}
+					},
+					"additionalProperties": false,
+					"description": "Ability scores the item sets, unless the score is already higher (Amulet of Health)."
+				},
+				"lightened": {
+					"type": "boolean",
+					"description": "Armor without its Strength requirement or Stealth Disadvantage (Mithral Armor)."
+				}
+			},
+			"additionalProperties": false,
+			"description": "What a magic item does to the sheet. A weapon's `attack` and an armor's or Shield's `ac` count only when attacking with it or wearing it; everything else counts while it's carried."
+		},
+		"FeatureUses": {
+			"type": "object",
+			"properties": {
+				"name": {
+					"type": "string",
+					"description": "The name to show, if not the entry's (a Draconic Ancestry's `Breath Weapon`)."
+				},
+				"description": {
+					"type": "string",
+					"description": "What it does, if not the entry's description."
+				},
+				"count": {
+					"anyOf": [
+						{
+							"type": "number"
+						},
+						{
+							"type": "string",
+							"const": "proficiency"
+						},
+						{
+							"$ref": "#/definitions/Ability"
+						},
+						{
+							"$ref": "#/definitions/ClassLevelCount"
+						},
+						{
+							"type": "string",
+							"const": "unlimited"
+						}
+					],
+					"description": "Uses per rest: a number, `proficiency` (the Proficiency Bonus), an ability (its modifier, at least 1: Dark One's Own Luck's Charisma), a count that grows with levels in a class (Second Wind), or `unlimited` for an activation nothing limits (a Horn of Blasting's blast, whose risk is the table's). Default 1."
+				},
+				"levelBonus": {
+					"type": "string",
+					"description": "A class whose level is added to `modifier` rolls (Second Wind's 1d10 + Fighter level)."
+				},
+				"levelMultiplier": {
+					"type": "number",
+					"description": "How many times the `levelBonus` level is added (Preserve Life's five). Default 1."
+				},
+				"healOthers": {
+					"type": "boolean",
+					"description": "Its healing can go to other creatures (Preserve Life), so the sheet offers it instead of healing the hero with it straight away (Second Wind)."
+				},
+				"rest": {
+					"type": "string",
+					"enum": [
+						"short",
+						"long"
+					],
+					"description": "The rest that brings them back. Default `long`."
+				},
+				"oneOnShortRest": {
+					"type": "boolean",
+					"description": "A Short Rest brings back one use, not all (Second Wind); a Long Rest brings back all."
+				},
+				"rolls": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/SpellRoll"
+					},
+					"description": "Rolls made on using it, like a spell's; `cantrip` dice grow at levels 5, 11 and 17."
+				},
+				"ability": {
+					"$ref": "#/definitions/Ability",
+					"description": "The ability for its save DC (8 + modifier + Proficiency Bonus) and `modifier` rolls."
+				},
+				"saveDc": {
+					"type": "number",
+					"description": "A save DC printed on the item instead of one from an ability (a Horn of Blasting's DC 15 Constitution save, a Wand of Paralysis's). Not with `ability`."
+				},
+				"attackBonus": {
+					"type": "number",
+					"description": "An attack bonus printed on the item for its `attack` roll (a Ring of the Ram's +7) instead of the `ability` modifier + Proficiency Bonus. Not with `ability`."
+				},
+				"on": {
+					"type": "string",
+					"const": "zero-hp",
+					"description": "`zero-hp`: offered when the character drops to 0 Hit Points (Relentless Endurance)."
+				},
+				"fly": {
+					"anyOf": [
+						{
+							"type": "number"
+						},
+						{
+							"type": "string",
+							"const": "speed"
+						}
+					],
+					"description": "A Fly Speed while a use lasts: feet, or `speed` for one equal to the Speed (Draconic Flight). The sheet shows the feature as active from its use until it ends."
+				},
+				"restore": {
+					"type": "object",
+					"properties": {
+						"sorceryPoints": {
+							"type": "number"
+						}
+					},
+					"required": [
+						"sorceryPoints"
+					],
+					"additionalProperties": false,
+					"description": "Sorcery Points that buy back a spent use (Dragon Wings' 3)."
+				},
+				"dash": {
+					"type": "boolean",
+					"description": "Using it also takes the Dash action (Adrenaline Rush)."
+				},
+				"spends": {
+					"$ref": "#/definitions/SpentResource",
+					"description": "Using it spends another resource instead of a use of its own (Land's Aid spends a Wild Shape use, Sacred Weapon a Channel Divinity use, Superior Defense Focus Points); `count` and `rest` are then ignored."
+				},
+				"cost": {
+					"type": "number",
+					"description": "How much of `spends` a use takes (Superior Defense's 3 Focus Points). Default 1."
+				},
+				"inEffect": {
+					"type": "object",
+					"properties": {
+						"resist": {
+							"type": "array",
+							"items": {
+								"anyOf": [
+									{
+										"$ref": "#/definitions/AnyDamageType"
+									},
+									{
+										"type": "string",
+										"const": "picked"
+									}
+								]
+							},
+							"description": "`picked`: the damage type picked when it was used (`pick`), a Potion of Resistance's."
+						},
+						"immune": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/AnyDamageType"
+							}
+						},
+						"meleeWeaponAttack": {
+							"$ref": "#/definitions/Ability"
+						},
+						"sets": {
+							"type": "object",
+							"properties": {
+								"str": {
+									"type": "number"
+								},
+								"dex": {
+									"type": "number"
+								},
+								"con": {
+									"type": "number"
+								},
+								"int": {
+									"type": "number"
+								},
+								"wis": {
+									"type": "number"
+								},
+								"cha": {
+									"type": "number"
+								}
+							},
+							"additionalProperties": false,
+							"description": "Ability scores set while it lasts, unless already higher (a Potion of Giant Strength)."
+						}
+					},
+					"additionalProperties": false,
+					"description": "What it gives while a use lasts (its description says for how long): Resistances (Superior Defense), or an ability's modifier, at least +1, added to attack rolls with melee weapons (Sacred Weapon)."
+				},
+				"pick": {
+					"type": "object",
+					"properties": {
+						"from": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/AnyDamageType"
+							}
+						},
+						"roll": {
+							"type": "string"
+						}
+					},
+					"required": [
+						"from"
+					],
+					"additionalProperties": false,
+					"description": "A damage type picked when it's used, `from` these: the player's choice, or `roll` (`1d10`) across them in order when the table rolls it (a Potion of Resistance)."
+				},
+				"table": {
+					"$ref": "#/definitions/RollTable",
+					"description": "A table rolled when it's used, with what happens on each roll in the item's own words (a Wand of Wonder's effects, a Deck of Illusions' cards): `dice` (`1d100`) and rows that together cover every roll, each `from` (and `to`, for a span) with its `text`."
+				},
+				"study": {
+					"type": "object",
+					"properties": {
+						"ability": {
+							"$ref": "#/definitions/Ability"
+						},
+						"amount": {
+							"type": "number"
+						},
+						"max": {
+							"type": "number"
+						}
+					},
+					"required": [
+						"ability",
+						"amount",
+						"max"
+					],
+					"additionalProperties": false,
+					"description": "Studying it raises an ability score for good (a Manual of Bodily Health's +2 Constitution, to a maximum of 30): using it records a `study` decision, and `spends: 'item'` uses it up."
+				},
+				"incapacitatedEnds": {
+					"type": "boolean",
+					"description": "Being Incapacitated ends it while it lasts (Superior Defense)."
+				},
+				"turn": {
+					"$ref": "#/definitions/FeatureTurn",
+					"description": "What it takes in combat, when not the entry's `turn` (one of several activations)."
+				},
+				"climb": {
+					"anyOf": [
+						{
+							"type": "number"
+						},
+						{
+							"type": "string",
+							"const": "speed"
+						}
+					],
+					"description": "A Climb or Swim Speed while a use lasts: feet, or `speed` for one equal to the Speed."
+				},
+				"swim": {
+					"anyOf": [
+						{
+							"type": "number"
+						},
+						{
+							"type": "string",
+							"const": "speed"
+						}
+					]
+				},
+				"dice": {
+					"$ref": "#/definitions/ClassLevelCount",
+					"description": "Dice that grow with levels in a class: the number of dice of every roll, from `levels` (Land's Aid: `[[3, 2], [10, 3], [14, 4]]` for 2d6, then 3d6 and 4d6)."
+				}
+			},
+			"additionalProperties": false,
+			"description": "A feature usable a limited number of times per rest (Breath Weapon, Relentless Endurance, Adrenaline Rush). The sheet tracks the uses and makes the rolls."
+		},
+		"ClassLevelCount": {
+			"type": "object",
+			"properties": {
+				"class": {
+					"type": "string"
+				},
+				"levels": {
+					"type": "array",
+					"items": {
+						"type": "array",
+						"items": {
+							"type": "number"
+						},
+						"minItems": 2,
+						"maxItems": 2
+					}
+				}
+			},
+			"required": [
+				"class",
+				"levels"
+			],
+			"additionalProperties": false,
+			"description": "Uses that grow with levels in a class: `levels` pairs a class level with the count from that level on, lowest first (Second Wind: `[[1, 2], [4, 3], [10, 4]]`)."
+		},
+		"SpellRoll": {
+			"type": "object",
+			"properties": {
+				"kind": {
+					"type": "string",
+					"enum": [
+						"damage",
+						"healing",
+						"temp-hp",
+						"bonus"
+					],
+					"description": "`bonus`: a die to add to a roll (Dark One's Own Luck's 1d10)."
+				},
+				"dice": {
+					"type": "string",
+					"description": "`8d6`, or empty for a flat amount (Heal's 70)."
+				},
+				"bonus": {
+					"type": "number",
+					"description": "A flat amount added to the dice (`1d4 + 1`)."
+				},
+				"modifier": {
+					"type": "boolean",
+					"description": "Adds the spellcasting ability modifier (or a feature's `ability` modifier)."
+				},
+				"proficiency": {
+					"type": "boolean",
+					"description": "Adds the Proficiency Bonus (Adrenaline Rush's Temporary Hit Points)."
+				},
+				"types": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/AnyDamageType"
+					},
+					"description": "Damage types; with more than one, the caster picks (or the text says which applies)."
+				},
+				"attack": {
+					"type": "string",
+					"enum": [
+						"melee",
+						"ranged"
+					],
+					"description": "Hits with a spell attack roll, so it can be a Critical Hit."
+				},
+				"save": {
+					"$ref": "#/definitions/Ability",
+					"description": "Targets make this saving throw against the spell save DC."
+				},
+				"half": {
+					"type": "boolean",
+					"description": "Half damage on a successful save."
+				},
+				"onHit": {
+					"type": "boolean",
+					"description": "Extra damage on the hit the spell is cast after (a smite): doubled on a Critical Hit."
+				},
+				"perHit": {
+					"type": "boolean",
+					"description": "Extra damage on every hit while the spell lasts (Hunter's Mark, Hex): nothing is rolled when it's cast; the sheet offers it on each hit as a rider."
+				},
+				"later": {
+					"type": "boolean",
+					"description": "Rolled while the spell lasts, when something sets it off (a creature enters Conjure Elemental's spirit): nothing is rolled when it's cast; the Concentration card offers it."
+				},
+				"again": {
+					"type": "boolean",
+					"description": "Rolled when it's cast and again while it lasts (Moonbeam, Spiritual Weapon)."
+				},
+				"when": {
+					"type": "string",
+					"description": "When a `later` or `again` roll comes up (`A creature starts its turn in it`)."
+				},
+				"higher": {
+					"type": "string",
+					"description": "Added for each slot level above the spell's level: dice (`1d6`) or a flat amount (`10`)."
+				},
+				"cantrip": {
+					"type": "boolean",
+					"description": "A cantrip whose dice grow at character levels 5, 11 and 17."
+				},
+				"count": {
+					"type": "number",
+					"description": "Separate darts, rays or beams, each rolled on its own (Magic Missile's 3)."
+				},
+				"countHigher": {
+					"type": "number",
+					"description": "More of them for each slot level above the spell's level."
+				},
+				"countCantrip": {
+					"type": "boolean",
+					"description": "A cantrip with more beams at character levels 5, 11 and 17 (Eldritch Blast)."
+				}
+			},
+			"required": [
+				"kind",
+				"dice"
+			],
+			"additionalProperties": false,
+			"description": "Dice a spell rolls: damage, healing or Temporary Hit Points, at the spell's own level. The sheet scales them to the slot (`spellRollAt`) and rolls them when the spell is cast."
+		},
+		"AnyDamageType": {
+			"type": "string",
+			"enum": [
+				"acid",
+				"bludgeoning",
+				"cold",
+				"fire",
+				"force",
+				"lightning",
+				"necrotic",
+				"piercing",
+				"poison",
+				"psychic",
+				"radiant",
+				"slashing",
+				"thunder"
+			]
+		},
+		"SpentResource": {
+			"type": "string",
+			"enum": [
+				"wild-shape",
+				"channel-divinity",
+				"focus",
+				"charges",
+				"item"
+			]
+		},
+		"RollTable": {
+			"type": "object",
+			"properties": {
+				"name": {
+					"type": "string",
+					"description": "The table's printed name (`Wand of Wonder Effects`), when it has one."
+				},
+				"dice": {
+					"type": "string"
+				},
+				"rows": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"from": {
+								"type": "number"
+							},
+							"to": {
+								"type": "number"
+							},
+							"text": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"from",
+							"text"
+						],
+						"additionalProperties": false
+					}
+				}
+			},
+			"required": [
+				"dice",
+				"rows"
+			],
+			"additionalProperties": false,
+			"description": "A table a use rolls on: dice and the rows they land on, each in the item's own words."
+		},
+		"FeatureTurn": {
+			"anyOf": [
+				{
+					"$ref": "#/definitions/TurnCost"
+				},
+				{
+					"type": "string",
+					"const": "attack"
+				}
+			],
+			"description": "What using a feature takes in combat: a `TurnCost`, or `attack` for one that replaces an attack of the Attack action (Breath Weapon)."
+		},
+		"TurnCost": {
+			"type": "string",
+			"enum": [
+				"action",
+				"bonus",
+				"reaction"
+			],
+			"description": "What a combat turn spends: the action, the Bonus Action or the Reaction."
+		},
+		"MagicCharges": {
+			"type": "object",
+			"properties": {
+				"max": {
+					"type": "number"
+				},
+				"dawn": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"max"
+			],
+			"additionalProperties": false,
+			"description": "A magic item's charges. `max` is the most it holds (for a rolled count like `1d3`, the highest roll). `dawn` is what it regains daily at dawn: dice like `1d6+1`, or `all`; absent when spent charges don't come back."
+		},
+		"ItemRider": {
+			"type": "object",
+			"properties": {
+				"dice": {
+					"type": "string"
+				},
+				"bonus": {
+					"type": "number"
+				},
+				"type": {
+					"$ref": "#/definitions/AnyDamageType"
+				},
+				"when": {
+					"type": "string"
+				},
+				"crit": {
+					"type": "boolean"
+				}
+			},
+			"additionalProperties": false,
+			"description": "Extra damage a magic weapon deals on a hit (Flame Tongue's 2d6 Fire). Without `type`, the weapon's own damage type (a Vicious Weapon). `when` says when, if not on every hit; `crit` only on a natural 20; `bonus` is a flat amount that isn't doubled."
+		},
+		"SpellcastingStats": {
+			"type": "object",
+			"properties": {
+				"ability": {
+					"$ref": "#/definitions/Ability"
+				},
+				"progression": {
+					"type": "string",
+					"enum": [
+						"full",
+						"half",
+						"pact"
+					]
+				},
+				"pact": {
+					"type": "object",
+					"properties": {
+						"slots": {
+							"type": "array",
+							"items": {
+								"type": "number"
+							}
+						},
+						"slotLevel": {
+							"type": "array",
+							"items": {
+								"type": "number"
+							}
+						}
+					},
+					"required": [
+						"slots",
+						"slotLevel"
+					],
+					"additionalProperties": false,
+					"description": "`pact` progression only: Pact Magic slots and their spell level at each class level (index 0 is level 1). They come back on a Short or Long Rest."
+				},
+				"cantrips": {
+					"type": "array",
+					"items": {
+						"type": "number"
+					},
+					"description": "Cantrips known at each class level; index 0 is level 1."
+				},
+				"prepared": {
+					"type": "array",
+					"items": {
+						"type": "number"
+					},
+					"description": "Level 1+ spells prepared at each class level; index 0 is level 1."
+				},
+				"list": {
+					"type": "string",
+					"description": "The class whose spell list this class uses, by entry ID. Defaults to its own."
+				},
+				"spellbook": {
+					"type": "boolean",
+					"description": "Prepares level 1+ spells from the spellbook (`spellbook` grants) rather than the list."
+				},
+				"secrets": {
+					"type": "object",
+					"properties": {
+						"level": {
+							"type": "number"
+						},
+						"lists": {
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						}
+					},
+					"required": [
+						"level",
+						"lists"
+					],
+					"additionalProperties": false,
+					"description": "From this class level, level 1+ spells can also be prepared from these other classes' lists, by entry ID, and count as this class's spells (the Bard's Magical Secrets)."
+				}
+			},
+			"required": [
+				"ability",
+				"progression",
+				"cantrips",
+				"prepared"
+			],
+			"additionalProperties": false,
+			"description": "How a class casts spells. Slots follow the Multiclass Spellcaster table: a `full` caster counts every class level, a `half` caster half its levels, rounded up. A `pact` caster (the Warlock's Pact Magic) doesn't count there; it has its own slots, all of one level, from `pact`. Cantrip and prepared spell counts are per class level, from the class's features table."
+		},
+		"Prerequisite": {
+			"type": "object",
+			"properties": {
+				"level": {
+					"type": "number",
+					"description": "Total character level (`Level 4+`)."
+				},
+				"abilities": {
+					"type": "object",
+					"properties": {
+						"abilities": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/Ability"
+							}
+						},
+						"minimum": {
+							"type": "number"
+						},
+						"all": {
+							"type": "boolean"
+						}
+					},
+					"required": [
+						"abilities",
+						"minimum"
+					],
+					"additionalProperties": false,
+					"description": "A minimum score in one of these abilities, or in all of them with `all`."
+				},
+				"feature": {
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						}
+					],
+					"description": "A feature or feat the character must have, by entry ID, or any one of a list (each class's Fighting Style feature)."
+				},
+				"spellcasting": {
+					"type": "boolean",
+					"description": "Needs a class with the Spellcasting feature."
+				},
+				"classLevel": {
+					"type": "number",
+					"description": "A level in the class whose choice offers the entry (`Level 5+ Warlock` on an Eldritch Invocation)."
+				},
+				"spell": {
+					"type": "string",
+					"description": "A spell the character knows, by entry ID (Agonizing Blast needs the cantrip it boosts)."
+				},
+				"spellFromClass": {
+					"type": "boolean",
+					"description": "With `spell`: it must be known as a spell of the class whose choice offers the entry (a Warlock cantrip, not a species' or a feat's)."
+				}
+			},
+			"additionalProperties": false,
+			"description": "What a character needs before they can take an entry (a feat). Every listed part must be met."
+		},
+		"SpellStats": {
+			"type": "object",
+			"properties": {
+				"level": {
+					"type": "number",
+					"description": "0 for a cantrip, otherwise 1–9."
+				},
+				"school": {
+					"$ref": "#/definitions/SpellSchool"
+				},
+				"lists": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"description": "Classes whose spell list has this spell, by class entry ID (`srd:class.cleric`)."
+				},
+				"castingTime": {
+					"type": "string",
+					"description": "Without the ritual note: `Action`, `Bonus Action`, `1 minute`."
+				},
+				"ritual": {
+					"type": "boolean"
+				},
+				"range": {
+					"type": "string"
+				},
+				"components": {
+					"type": "string"
+				},
+				"duration": {
+					"type": "string",
+					"description": "Without the Concentration note: `1 minute`."
+				},
+				"concentration": {
+					"type": "boolean"
+				},
+				"text": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"description": "The full rules text, one paragraph per item."
+				},
+				"rolls": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/SpellRoll"
+					},
+					"description": "What the spell rolls when it's cast, in the order the sheet offers them."
+				},
+				"area": {
+					"type": "boolean",
+					"description": "It affects everyone in an area (a Sphere, a Cone, a wall), not creatures picked one by one."
+				},
+				"targets": {
+					"type": "number",
+					"description": "Up to this many creatures the caster picks (Bless's 3). Neither this nor `area`: one target."
+				},
+				"targetsHigher": {
+					"type": "number",
+					"description": "More creatures for each slot level above the spell's level."
+				}
+			},
+			"required": [
+				"level",
+				"school",
+				"lists",
+				"castingTime",
+				"ritual",
+				"range",
+				"components",
+				"duration",
+				"concentration"
+			],
+			"additionalProperties": false,
+			"description": "Spell stats, as printed in the spell's description."
+		},
+		"SpellSchool": {
+			"type": "string",
+			"enum": [
+				"abjuration",
+				"conjuration",
+				"divination",
+				"enchantment",
+				"evocation",
+				"illusion",
+				"necromancy",
+				"transmutation"
+			]
+		},
+		"SpellBoost": {
+			"type": "object",
+			"properties": {
+				"ability": {
+					"$ref": "#/definitions/Ability"
+				},
+				"spell": {
+					"type": "string",
+					"description": "Only this spell, by entry ID."
+				},
+				"school": {
+					"$ref": "#/definitions/SpellSchool",
+					"description": "Only spells of this school."
+				},
+				"classSpells": {
+					"type": "boolean",
+					"description": "Only spells cast through the class that grants it (a Wizard spell)."
+				},
+				"once": {
+					"type": "boolean",
+					"description": "Added to one damage roll of the spell rather than every one."
+				}
+			},
+			"required": [
+				"ability"
+			],
+			"additionalProperties": false,
+			"description": "An ability modifier added to spell damage rolls (Agonizing Blast, Empowered Evocation). With no `spell` or `school` it boosts every damaging spell; both narrow it."
+		},
+		"CreatureStats": {
+			"type": "object",
+			"properties": {
+				"size": {
+					"$ref": "#/definitions/Size"
+				},
+				"type": {
+					"type": "string",
+					"description": "`Beast`, `Beast (Dinosaur)`, `Swarm of Tiny Beasts`."
+				},
+				"alignment": {
+					"type": "string",
+					"description": "`Lawful Evil`, `Unaligned`."
+				},
+				"ac": {
+					"type": "number"
+				},
+				"initiative": {
+					"type": "number"
+				},
+				"hp": {
+					"type": "number"
+				},
+				"hitDice": {
+					"type": "string"
+				},
+				"speed": {
+					"type": "object",
+					"properties": {
+						"walk": {
+							"type": "number"
+						},
+						"burrow": {
+							"type": "number"
+						},
+						"climb": {
+							"type": "number"
+						},
+						"fly": {
+							"type": "number"
+						},
+						"swim": {
+							"type": "number"
+						},
+						"hover": {
+							"type": "boolean"
+						}
+					},
+					"required": [
+						"walk"
+					],
+					"additionalProperties": false,
+					"description": "Speeds in feet; `walk` is the plain Speed."
+				},
+				"abilities": {
+					"$ref": "#/definitions/AbilityScores"
+				},
+				"saves": {
+					"type": "object",
+					"properties": {
+						"str": {
+							"type": "number"
+						},
+						"dex": {
+							"type": "number"
+						},
+						"con": {
+							"type": "number"
+						},
+						"int": {
+							"type": "number"
+						},
+						"wis": {
+							"type": "number"
+						},
+						"cha": {
+							"type": "number"
+						}
+					},
+					"required": [
+						"str",
+						"dex",
+						"con",
+						"int",
+						"wis",
+						"cha"
+					],
+					"additionalProperties": false,
+					"description": "Saving throw bonuses as printed."
+				},
+				"skills": {
+					"type": "object",
+					"properties": {
+						"acrobatics": {
+							"type": "number"
+						},
+						"animal-handling": {
+							"type": "number"
+						},
+						"arcana": {
+							"type": "number"
+						},
+						"athletics": {
+							"type": "number"
+						},
+						"deception": {
+							"type": "number"
+						},
+						"history": {
+							"type": "number"
+						},
+						"insight": {
+							"type": "number"
+						},
+						"intimidation": {
+							"type": "number"
+						},
+						"investigation": {
+							"type": "number"
+						},
+						"medicine": {
+							"type": "number"
+						},
+						"nature": {
+							"type": "number"
+						},
+						"perception": {
+							"type": "number"
+						},
+						"performance": {
+							"type": "number"
+						},
+						"persuasion": {
+							"type": "number"
+						},
+						"religion": {
+							"type": "number"
+						},
+						"sleight-of-hand": {
+							"type": "number"
+						},
+						"stealth": {
+							"type": "number"
+						},
+						"survival": {
+							"type": "number"
+						}
+					},
+					"additionalProperties": false,
+					"description": "Skill bonuses as printed."
+				},
+				"senses": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"description": "Senses other than Passive Perception (`Darkvision 60 ft.`)."
+				},
+				"darkvision": {
+					"type": "number"
+				},
+				"passivePerception": {
+					"type": "number"
+				},
+				"resistances": {
+					"type": "string"
+				},
+				"immunities": {
+					"type": "string"
+				},
+				"vulnerabilities": {
+					"type": "string"
+				},
+				"languages": {
+					"type": "string"
+				},
+				"cr": {
+					"type": "number",
+					"description": "Challenge Rating (0.25 for 1/4)."
+				},
+				"xp": {
+					"type": "number",
+					"description": "Experience Points for defeating it, and in its lair when that differs."
+				},
+				"lairXp": {
+					"type": "number"
+				},
+				"gear": {
+					"type": "string",
+					"description": "Equipment it carries (`Leather Armor, Scimitar, Shield`)."
+				},
+				"traits": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/CreatureFeature"
+					}
+				},
+				"actions": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/CreatureFeature"
+					}
+				},
+				"bonusActions": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/CreatureFeature"
+					}
+				},
+				"reactions": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/CreatureFeature"
+					}
+				},
+				"legendaryActions": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/CreatureFeature"
+					},
+					"description": "Taken immediately after another creature's turn, `legendaryUses` times a round."
+				},
+				"legendaryUses": {
+					"type": "number"
+				},
+				"lairLegendaryUses": {
+					"type": "number"
+				}
+			},
+			"required": [
+				"size",
+				"type",
+				"ac",
+				"initiative",
+				"hp",
+				"hitDice",
+				"speed",
+				"abilities",
+				"saves",
+				"passivePerception",
+				"cr",
+				"actions"
+			],
+			"additionalProperties": false,
+			"description": "A creature's stat block (SRD \"Monsters A–Z\" and \"Animals\")."
+		},
+		"Size": {
+			"type": "string",
+			"enum": [
+				"tiny",
+				"small",
+				"medium",
+				"large",
+				"huge",
+				"gargantuan"
+			]
+		},
+		"AbilityScores": {
+			"type": "object",
+			"properties": {
+				"str": {
+					"type": "number"
+				},
+				"dex": {
+					"type": "number"
+				},
+				"con": {
+					"type": "number"
+				},
+				"int": {
+					"type": "number"
+				},
+				"wis": {
+					"type": "number"
+				},
+				"cha": {
+					"type": "number"
+				}
+			},
+			"required": [
+				"str",
+				"dex",
+				"con",
+				"int",
+				"wis",
+				"cha"
+			],
+			"additionalProperties": false
+		},
+		"CreatureFeature": {
+			"type": "object",
+			"properties": {
+				"name": {
+					"type": "string"
+				},
+				"text": {
+					"type": "string"
+				},
+				"attack": {
+					"type": "object",
+					"properties": {
+						"range": {
+							"type": "string",
+							"enum": [
+								"melee",
+								"ranged",
+								"both"
+							]
+						},
+						"toHit": {
+							"type": "number"
+						},
+						"reach": {
+							"type": "number"
+						},
+						"distance": {
+							"type": "array",
+							"items": {
+								"type": "number"
+							},
+							"minItems": 2,
+							"maxItems": 2
+						},
+						"damage": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/CreatureDamage"
+							},
+							"description": "The hit's damage, its main damage first (`plus 3 (1d6) Poison` follows)."
+						}
+					},
+					"required": [
+						"range",
+						"toHit",
+						"damage"
+					],
+					"additionalProperties": false
+				},
+				"save": {
+					"type": "object",
+					"properties": {
+						"ability": {
+							"$ref": "#/definitions/Ability"
+						},
+						"dc": {
+							"type": "number"
+						},
+						"damage": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/CreatureDamage"
+							}
+						},
+						"half": {
+							"type": "boolean"
+						}
+					},
+					"required": [
+						"ability",
+						"dc",
+						"damage"
+					],
+					"additionalProperties": false
+				},
+				"recharge": {
+					"type": "number",
+					"description": "`(Recharge 5–6)`: the lowest d6 roll that recharges it at the start of the creature's turn."
+				},
+				"perDay": {
+					"type": "number",
+					"description": "`(3/Day)`: uses per day."
+				}
+			},
+			"required": [
+				"name",
+				"text"
+			],
+			"additionalProperties": false,
+			"description": "A trait or action from a stat block, with its attack roll or saving throw when it has one."
+		},
+		"CreatureDamage": {
+			"type": "object",
+			"properties": {
+				"dice": {
+					"type": "string",
+					"description": "Dice notation (`1d6`), or empty for flat damage."
+				},
+				"bonus": {
+					"type": "number"
+				},
+				"average": {
+					"type": "number",
+					"description": "The printed average."
+				},
+				"type": {
+					"$ref": "#/definitions/AnyDamageType"
+				}
+			},
+			"required": [
+				"dice",
+				"bonus",
+				"average",
+				"type"
+			],
+			"additionalProperties": false,
+			"description": "Damage a creature's attack or save deals, as its stat block prints it."
+		},
+		"PackExtension": {
+			"type": "object",
+			"properties": {
+				"choice": {
+					"type": "string",
+					"description": "The choice to extend, by ID. It must be offered by one of the pack's dependencies."
+				},
+				"add": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"description": "Options to add, valid for that choice's target."
+				}
+			},
+			"required": [
+				"choice",
+				"add"
+			],
+			"additionalProperties": false,
+			"description": "Add options to another pack's choice, e.g. a homebrew subclass to `srd:class.fighter.subclass`. The options only appear for characters using this pack."
+		}
+	},
+	"$id": "https://allbark.dev/schemas/pack-v1.json",
+	"title": "Cerberus content pack (format v1)"
+}

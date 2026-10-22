@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="color-scheme" content="dark light" />
+		<meta name="theme-color" content="#1b1710" media="(prefers-color-scheme: dark)" />
+		<meta name="theme-color" content="#f4ecd8" media="(prefers-color-scheme: light)" />
+		<link rel="icon" href="https://allbark.dev/assets/devlog/paw.svg" type="image/svg+xml" />
+		<link href="../_app/immutable/entry/start.CvgFzpIw.js" rel="modulepreload">
+		<link href="../_app/immutable/entry/payload.DSmR2FwN.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/CRzLMJPS.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/C640smL1.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/BKHGcPE7.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/YjCzTz1V.js" rel="modulepreload">
+		<link href="../_app/immutable/entry/app.evNI8SeW.js" rel="modulepreload">
+		<link href="../_app/immutable/nodes/0.h3ONfS3A.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/B0Z9INg1.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/-fHkCWoL.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/7icErDgN.js" rel="modulepreload">
+		<link href="../_app/immutable/nodes/3.DjnuHu9U.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/Cv2Ght7N.js" rel="modulepreload">
+		<!--yugg08--><meta name="description" content="How Cerberus homebrew packs are put together: the manifest, IDs, building on the SRD, and effects."/><!----><title>Homebrew pack format · All Bark</title>
+		<link href="../_app/immutable/assets/0.4Jodf7Pe.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/3.DZq8lW1C.css" rel="stylesheet">
+	</head>
+	<body>
+		<div style="display: contents"><!--[--><!--[--><!--[0--><!--[--><a class="skip" href="#content">Skip to content</a> <header class="wrap masthead svelte-12qhfyh"><a class="brand svelte-12qhfyh" href="https://allbark.dev/"><svg class="paw svelte-12qhfyh" viewBox="0 0 64 64" aria-hidden="true" fill="currentColor"><ellipse cx="14" cy="27" rx="6.5" ry="8.5" transform="rotate(-18 14 27)"></ellipse><ellipse cx="25" cy="15" rx="6.5" ry="9"></ellipse><ellipse cx="39" cy="15" rx="6.5" ry="9"></ellipse><ellipse cx="50" cy="27" rx="6.5" ry="8.5" transform="rotate(18 50 27)"></ellipse><path d="M32 30c-9 0-17 10-17 18 0 6 5 9 10 8 3-.6 4.6-2 7-2s4 1.4 7 2c5 1 10-2 10-8 0-8-8-18-17-18z"></path></svg> <span>All Bark</span></a> <nav aria-label="Homebrew" class="svelte-12qhfyh"><a href="../" class="svelte-12qhfyh">Check a pack</a> <a href="../format" class="svelte-12qhfyh">Pack format</a> <a href="https://allbark.dev/cerberus/" class="svelte-12qhfyh">Cerberus</a></nav></header> <main id="content" class="wrap"><!--[--><!--[-1--><!--[--><h1>The homebrew pack format</h1> <p class="dek">Everything in Cerberus, the SRD included, is a pack: a JSON file with a short manifest and a list
+	of entries. Write your own to add subclasses, feats, items and more, then <a href="../">check it here</a> before you share it.</p> <p class="downloads svelte-yugg08"><a class="button" href="data:application/json;base64,ewoJImlkIjogImFsbGJhcmstaG91bmQtbWFzdGVyIiwKCSJuYW1lIjogIkhvdW5kIE1hc3RlciAoaG9tZWJyZXcgZXhhbXBsZSkiLAoJInZlcnNpb24iOiAiMS4wLjAiLAoJImZvcm1hdFZlcnNpb24iOiAxLAoJIm5hbWVzcGFjZSI6ICJob3VuZCIsCgkicHVibGlzaGVyIjogIkFsbCBCYXJrIiwKCSJsaWNlbnNlIjogeyAibmFtZSI6ICJDQy1CWS00LjAiLCAidXJsIjogImh0dHBzOi8vY3JlYXRpdmVjb21tb25zLm9yZy9saWNlbnNlcy9ieS80LjAvIiB9LAoJImRlcGVuZGVuY2llcyI6IFt7ICJpZCI6ICJzcmQtNS4yIiwgInZlcnNpb24iOiAiMC4yLjAiIH1dLAoJImV4dGVuc2lvbnMiOiBbCgkJeyAiY2hvaWNlIjogInNyZDpjbGFzcy5maWdodGVyLnN1YmNsYXNzIiwgImFkZCI6IFsiaG91bmQ6c3ViY2xhc3MuZmlnaHRlci5ob3VuZC1tYXN0ZXIiXSB9CgldLAoJImVudHJpZXMiOiB7CgkJImhvdW5kOnN1YmNsYXNzLmZpZ2h0ZXIuaG91bmQtbWFzdGVyIjogewoJCQkiaWQiOiAiaG91bmQ6c3ViY2xhc3MuZmlnaHRlci5ob3VuZC1tYXN0ZXIiLAoJCQkidHlwZSI6ICJzdWJjbGFzcyIsCgkJCSJuYW1lIjogIkhvdW5kIE1hc3RlciIsCgkJCSJkZXNjcmlwdGlvbiI6ICJUb3VnaCBvdXRzaWRlLCBsb3lhbCBpbnNpZGU6IHlvdSBmaWdodCBzaWRlIGJ5IHNpZGUgd2l0aCBhIHRydXN0ZWQgaG91bmQuIiwKCQkJImVmZmVjdHMiOiBbCgkJCQl7CgkJCQkJImtpbmQiOiAiZ3JhbnQiLAoJCQkJCSJ0YXJnZXQiOiAiZmVhdHVyZSIsCgkJCQkJInZhbHVlIjogImhvdW5kOmZlYXR1cmUuaG91bmQtbWFzdGVyLmxveWFsLWNvbXBhbmlvbiIsCgkJCQkJImxldmVsIjogMwoJCQkJfSwKCQkJCXsgImtpbmQiOiAiZ3JhbnQiLCAidGFyZ2V0IjogInByb2ZpY2llbmN5LnNraWxsIiwgInZhbHVlIjogImFuaW1hbC1oYW5kbGluZyIsICJsZXZlbCI6IDMgfQoJCQldCgkJfSwKCQkiaG91bmQ6ZmVhdHVyZS5ob3VuZC1tYXN0ZXIubG95YWwtY29tcGFuaW9uIjogewoJCQkiaWQiOiAiaG91bmQ6ZmVhdHVyZS5ob3VuZC1tYXN0ZXIubG95YWwtY29tcGFuaW9uIiwKCQkJInR5cGUiOiAiZmVhdHVyZSIsCgkJCSJuYW1lIjogIkxveWFsIENvbXBhbmlvbiIsCgkJCSJkZXNjcmlwdGlvbiI6ICJBIGhvdW5kIGZpZ2h0cyBhdCB5b3VyIHNpZGUuIFlvdSBoYXZlIEFkdmFudGFnZSBvbiBXaXNkb20gKFBlcmNlcHRpb24pIGNoZWNrcyB3aGlsZSBpdCBpcyB3aXRoaW4gMzAgZmVldCBvZiB5b3UuIiwKCQkJImVmZmVjdHMiOiBbCgkJCQl7ICJraW5kIjogImdyYW50IiwgInRhcmdldCI6ICJhZHZhbnRhZ2UiLCAidmFsdWUiOiAic2tpbGwucGVyY2VwdGlvbiIsICJsZXZlbCI6IDMgfQoJCQldCgkJfQoJfQp9Cg==" download="hound-master.pack.json">Example: a subclass</a> <a class="button" href="/homebrew/_app/immutable/assets/kennel-armory.pack.B2xK21v6.json" download="kennel-armory.pack.json">Example: magic items</a> <a class="button" href="/homebrew/_app/immutable/assets/pack.schema.DCooBC2B.json" download="pack.schema.json">JSON Schema</a></p> <section class="svelte-yugg08"><h2 class="svelte-yugg08">The manifest</h2> <pre><code>{
+  "id": "my-hound-pack",
+  "name": "Hound Master",
+  "version": "1.0.0",
+  "formatVersion": 1,
+  "namespace": "hound",
+  "publisher": "Your name",
+  "license": { "name": "CC-BY-4.0", "url": "https://creativecommons.org/licenses/by/4.0/" },
+  "dependencies": [{ "id": "srd-5.2" }],
+  "extensions": [
+    { "choice": "srd:class.fighter.subclass", "add": ["hound:subclass.fighter.hound-master"] }
+  ],
+  "entries": { … }
+}</code></pre> <ul class="svelte-yugg08"><li class="svelte-yugg08"><code>id</code> is what heroes remember the pack by, so keep it once you've shared it.</li> <li class="svelte-yugg08"><code>version</code> is your content's version. <code>formatVersion</code> is this format's,
+			and is <code>1</code>.</li> <li class="svelte-yugg08"><code>namespace</code> is a short prefix that goes in front of every ID in your pack, so two
+			packs can never clash. <code>srd</code> is taken.</li> <li class="svelte-yugg08"><code>license</code> says how others may use your work, and <code>attribution</code>, if your
+			license needs one, is shown on the app's About screen.</li></ul></section> <section class="svelte-yugg08"><h2 class="svelte-yugg08">Building on the SRD</h2> <p>A pack can use its own entries and those of the packs it lists in <code>dependencies</code>,
+		nothing else. List <code>srd-5.2</code> to point at SRD classes, spells, items and features by
+		their IDs, like <code>srd:class.fighter</code> or <code>srd:spell.fireball</code>.</p> <p>To add an option to a choice another pack offers, such as a new Fighter subclass, use <code>extensions</code>. The new option only shows up for heroes using your pack.</p></section> <section class="svelte-yugg08"><h2 class="svelte-yugg08">Entries</h2> <pre><code>"hound:feature.hound-master.loyal-companion": {
+  "id": "hound:feature.hound-master.loyal-companion",
+  "type": "feature",
+  "name": "Loyal Companion",
+  "description": "A hound fights at your side.",
+  "effects": [
+    { "kind": "grant", "target": "advantage", "value": "skill.perception", "level": 3 }
+  ]
+}</code></pre> <p>Each entry has an <code>id</code> (your namespace, a colon, then a type and a name in
+		kebab-case), a <code>type</code>, a <code>name</code>, an optional one-line <code>description</code>, and its <code>effects</code>. The types are <code>class</code>, <code>subclass</code>, <code>species</code>, <code>background</code>, <code>feature</code>, <code>feat</code>, <code>spell</code>, <code>item</code>, <code>package</code> and <code>creature</code>. The key in <code>entries</code> must match the <code>id</code>.</p></section> <section class="svelte-yugg08"><h2 class="svelte-yugg08">Effects</h2> <p>Effects say what an entry does, in plain data. Cerberus applies them in order and does the math,
+		so you never write a number the app could work out. Any effect can take <code>level</code> to switch on from that character level.</p> <pre><code>{ "kind": "grant", "target": "proficiency.skill", "value": "athletics" }
+{ "kind": "grant", "target": "feature", "value": "hound:feature.keen-nose", "level": 3 }
+{ "kind": "modify", "target": "speed", "amount": 5 }
+{ "kind": "modify", "target": "hp.max", "amount": "level" }
+{ "kind": "choice", "id": "hound:feat.pack-tactics.skill", "label": "Pick a skill",
+  "choose": 1, "target": "proficiency.skill", "from": ["perception", "survival"] }</code></pre> <ul class="svelte-yugg08"><li class="svelte-yugg08"><strong>grant</strong> adds something: a proficiency, a feature, a spell, a language, advantage
+			on a roll.</li> <li class="svelte-yugg08"><strong>modify</strong> changes a number like Speed, max HP or AC. Amounts can be a number, <code>"proficiency"</code> or <code>"level"</code>.</li> <li class="svelte-yugg08"><strong>choice</strong> asks the player to pick, and grants each pick.</li></ul> <p>Features and feats can also carry limited <code>uses</code> per rest, with their own rolls. The JSON
+		Schema lists every target and option, and the examples show most of them in use. Editors that read
+		JSON Schemas, like VS Code, can check a pack as you type once you map the schema to your pack files
+		in their settings.</p></section> <section class="svelte-yugg08"><h2 class="svelte-yugg08">A few rules</h2> <ul class="svelte-yugg08"><li class="svelte-yugg08">Write your own words. Only the SRD 5.2 is free to copy; other books are not.</li> <li class="svelte-yugg08">Homebrew is labeled as homebrew in the builder and on the sheet.</li> <li class="svelte-yugg08">Pack files stay yours. Cerberus reads them and never uploads them.</li></ul></section><!--]--><!--]--><!--]--><!----></main> <footer class="wrap foot svelte-12qhfyh"><p>Homebrew tools for <a href="https://allbark.dev/cerberus/">Cerberus</a>, a character builder and
+		table sheet for fifth edition by <a href="https://allbark.dev/">All Bark</a>. Packs are checked
+		in your browser and never uploaded.</p></footer><!--]--><!--]--><!--]--><!----> <!--[-1--><!--]--><!--]-->
+			
+			<script>
+				{
+					__sveltekit_1ozphjo = {
+						base: new URL("..", location).pathname.slice(0, -1),
+						version: "1792546493647",
+						assets: "/homebrew"
+					};
+
+					const element = document.currentScript.parentElement;
+
+					import("../_app/immutable/entry/start.CvgFzpIw.js").then(async (kit) => {
+						kit.init(__sveltekit_1ozphjo);
+						const app = await import("../_app/immutable/entry/app.evNI8SeW.js");
+						kit.start(app, element, {
+							node_ids: [0, 3],
+							data: [null,null],
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
+</html>
