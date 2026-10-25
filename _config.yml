@@ -35,6 +35,8 @@ follow:
 # assets live in homebrew/_app, which Jekyll would skip for the leading underscore.
 include:
   - _app
+  # App links: Cerberus opens allbark.dev/t/<code> (iOS associated domains, Android app links).
+  - .well-known
 
 exclude:
   - README.md

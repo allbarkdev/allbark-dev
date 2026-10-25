@@ -27,6 +27,11 @@ no theme to maintain.
   `apps/homebrew` in allbarkdev/cerberus. Never edit it here: after it changes there, run
   `_tools/sync-homebrew.sh <path to a cerberus checkout>` and commit the result.
   `_config.yml` includes `_app` so Jekyll copies its assets.
+- `/t/<code>` is a Cerberus online table's link (its QR code). With Cerberus installed the phone
+  opens the app instead, through `/.well-known/apple-app-site-association` (iOS) and
+  `/.well-known/assetlinks.json` (Android; add Play's app signing SHA-256 there once it exists).
+  Without it, Pages serves `404.html`, which shows the code to type in. `_config.yml` includes
+  `.well-known`, which Jekyll would skip for the leading dot.
 - The "Follow along" links in every footer come from `follow:` in `_config.yml`. Add a service
   there, not in a layout.
 - Every page follows the visitor's system light/dark setting and falls back to dark when there
