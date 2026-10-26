@@ -1,0 +1,10 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["42PHPR5MC3.dev.allbark.cerberus"],
+        "components": [{ "/": "/t/*", "comment": "Cerberus: an online table's code" }]
+      }
+    ]
+  }
+}
