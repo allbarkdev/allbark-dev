@@ -24,6 +24,10 @@ no theme to maintain.
   `python3 _tools/og_image.py <app>/index.html`, using the page's `og_brand` and `og_url` in place of
   the blog's brand line and footer. Keep public claims in step with what the app's notes allow
   (no release dates, prices or untested features).
+- `/play/` is the Cerberus web app, a prebuilt SvelteKit site from `apps/app` in
+  allbarkdev/cerberus (built with `CERBERUS_BASE=/play` and `--mode web`). Never edit it here:
+  run `_tools/sync-play.sh <path to a cerberus checkout>` and commit the result. A table link
+  (`/t/<code>`) opened without the app goes from `404.html` to `/play/heroes?t=<code>`.
 - `/homebrew/` is the homebrew pack checker and format guide, a prebuilt SvelteKit site from
   `apps/homebrew` in allbarkdev/cerberus. Never edit it here: after it changes there, run
   `_tools/sync-homebrew.sh <path to a cerberus checkout>` and commit the result.

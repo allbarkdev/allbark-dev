@@ -1,0 +1,1 @@
+var e={appName:`Cerberus`,appId:`dev.allbark.cerberus`}.appName;export{e as t};
