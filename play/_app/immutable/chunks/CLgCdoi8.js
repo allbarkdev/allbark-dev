@@ -1,0 +1,1 @@
+var e=[4,6,8,10,12,20],t=t=>e.includes(t);export{t as n,e as t};

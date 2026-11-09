@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"
+		/>
+		<meta name="text-scale" content="scale" />
+		<meta name="theme-color" content="#11141c" />
+		<meta name="mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<link rel="icon" href="./icon.svg" type="image/svg+xml" />
+		<link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+		<link rel="manifest" href="./manifest.webmanifest" />
+		<script>
+			// The palette picked in Settings, before the first paint (see lib/palette.svelte.ts).
+			try {
+				var palette = localStorage.getItem('palette');
+				if (palette && palette !== 'campfire') document.documentElement.dataset.palette = palette;
+			} catch (e) {
+				/* storage off: Campfire */
+			}
+			// An iPhone home-screen web app has no swipe back, so it keeps the on-screen Back (the
+			// `swipe-back` variant in app.css). The native app turns the gesture on itself.
+			if (
+				navigator.standalone === true &&
+				!(window.Capacitor && window.Capacitor.isNativePlatform())
+			)
+				document.documentElement.classList.add('no-swipe-back');
+		</script>
+		<link href="./_app/immutable/entry/start.Dw0KsLpk.js" rel="modulepreload">
+		<link href="./_app/immutable/entry/payload.DSmR2FwN.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/CRzLMJPS.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/DDwzaMNv.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/Dt2GIW-s.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/D2RULGNm.js" rel="modulepreload">
+		<link href="./_app/immutable/entry/app.BihRMZbi.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/62TeNfsI.js" rel="modulepreload">
+		<link href="./_app/immutable/nodes/0.DeQhkbXf.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/BWaJ3C7D.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/BAsuuIcl.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/DmlJ0KQR.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/Ds5Jm_-O.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/Dgt0qrKK.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/CHQXHNpy.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/DhbZXHq7.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/ZCA6Ki-U.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/BCIc2L0W.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/CC2ZQxTZ.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/BB1U64hi.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/BxqrEYQh.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/BIS7ySwM.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/DT_QWC1_.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/Bg_eC_0n.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/DjMbIsAZ.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/cBbv6HZE.js" rel="modulepreload">
+		<link href="./_app/immutable/nodes/8.QXMn3LGV.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/BtmC96uh.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/LS2lFZoc.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/DLio-VqS.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/DQJenZGo.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/Cn9wl-tR.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/CjteJ-iQ.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/uULA_GIL.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/BGMly0t8.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/Lo5Wlf5_.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/CjrEQB1r.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/Bj4cEefU.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/DrQZGu8z.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/BXoC14Lc.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/DS_dzZ9J.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/BU-_xIsv.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/lOPvvRV1.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/9f1YK8wV.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/dcYb2i80.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/CLgCdoi8.js" rel="modulepreload">
+		
+		<link href="./_app/immutable/assets/0.BwIBLZ5Q.css" rel="stylesheet">
+		<link href="./_app/immutable/assets/SpellCard.DtfYRL2y.css" rel="stylesheet">
+		<link href="./_app/immutable/assets/8.DYOJB2GC.css" rel="stylesheet">
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">
+			<script>
+				{
+					__sveltekit_l4zndp = {
+						base: new URL(".", location).pathname.slice(0, -1),
+						version: "1794260973497",
+						assets: "/play"
+					};
+
+					const element = document.currentScript.parentElement;
+
+					import("./_app/immutable/entry/start.Dw0KsLpk.js").then(async (kit) => {
+						kit.init(__sveltekit_l4zndp);
+						const app = await import("./_app/immutable/entry/app.BihRMZbi.js");
+						kit.start(app, element);
+					});
+				}
+			</script>
+		</div>
+	</body>
+</html>

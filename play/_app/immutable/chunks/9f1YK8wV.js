@@ -1,0 +1,1 @@
+import{At as e,Ot as t,lt as n}from"./D2RULGNm.js";import{n as r}from"./DmlJ0KQR.js";var i=`rules.strict`,a=new class{#e=e(!0);get on(){return n(this.#e)}set on(e){t(this.#e,e,!0)}constructor(){typeof window<`u`&&r.get({key:i}).then(({value:e})=>{e!==null&&(this.on=e===`true`)})}set(e){this.on=e,r.set({key:i,value:String(e)})}block(e){return this.on?e??null:null}};export{a as t};
