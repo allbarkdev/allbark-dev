@@ -1,0 +1,1 @@
+import{b as e,y as t}from"./D2RULGNm.js";import{r as n}from"./DmlJ0KQR.js";var r={name:`share`,size:24,node:[[`path`,{d:`M12 2v13`}],[`path`,{d:`m16 6-4-4-4 4`}],[`path`,{d:`M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8`}]]};r.node;var i=new Set([`$$slots`,`$$events`,`$$legacy`]);function a(a,o){let s=t(o,i);n(a,e(()=>s,{get icon(){return r}}))}export{a as t};
